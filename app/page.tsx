@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Star, MapPin, Phone, Award, Heart, Sparkles } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
+import { siteConfig } from "@/config/site"
 
 export default function HomePage() {
   const featuredProducts = [
@@ -63,7 +64,7 @@ export default function HomePage() {
             <div className="text-white space-y-8">
               <div className="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20">
                 <Sparkles className="w-4 h-4 mr-2 text-gold-400" />
-                <span className="text-sm font-medium">Premium Tea Experience</span>
+                <span className="text-sm font-medium">Trải nghiệm đẳng cấp</span>
               </div>
 
               <div className="space-y-6">
@@ -102,7 +103,7 @@ export default function HomePage() {
               <div className="relative bg-white/10 backdrop-blur-sm rounded-3xl p-8 border border-white/20">
                 <Image
                   src="/logo.png"
-                  alt="HN Tea Premium"
+                  alt={`${siteConfig.name} Premium`}
                   width={200}
                   height={200}
                   className="mx-auto rounded-full shadow-2xl"
@@ -123,12 +124,12 @@ export default function HomePage() {
             </div>
             <h2 className="text-4xl lg:text-5xl font-bold text-navy-900 mb-6">
               Bộ Sưu Tập
-              <span className="block text-transparent bg-gradient-to-r from-gold-500 to-gold-400 bg-clip-text">
+              <span className="block text-transparent bg-gradient-to-r from-gold-500 to-gold-400 bg-clip-text mt-2 pb-3">
                 Signature
               </span>
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Những sáng tạo độc đáo được yêu thích nhất tại HN Tea
+              Những sáng tạo độc đáo được yêu thích nhất tại {siteConfig.name}
             </p>
           </div>
 
@@ -184,7 +185,7 @@ export default function HomePage() {
                     </div>
                   </div>
                   <Button className="w-full bg-gradient-to-r from-navy-600 to-navy-700 hover:from-navy-700 hover:to-navy-800 text-white shadow-lg hover:shadow-xl transition-all duration-300">
-                    Thêm Vào Giỏ
+                    Xem Chi Tiết
                   </Button>
                 </CardContent>
               </Card>
@@ -199,8 +200,8 @@ export default function HomePage() {
           <div className="text-center mb-16">
             <h2 className="text-4xl lg:text-5xl font-bold text-navy-900 mb-6">
               Tại Sao Chọn
-              <span className="block text-transparent bg-gradient-to-r from-gold-500 to-gold-400 bg-clip-text">
-                HN Tea?
+              <span className="block text-transparent bg-gradient-to-r from-gold-500 to-gold-400 bg-clip-text mt-2 p-3">
+                {siteConfig.name}?
               </span>
             </h2>
           </div>
@@ -229,7 +230,7 @@ export default function HomePage() {
           <div className="max-w-4xl mx-auto">
             <h2 className="text-4xl lg:text-6xl font-bold text-white mb-6">
               Trải Nghiệm
-              <span className="block text-transparent bg-gradient-to-r from-gold-400 to-gold-300 bg-clip-text">
+              <span className="block text-transparent bg-gradient-to-r from-gold-400 to-gold-300 bg-clip-text mt-2 pb-3 pt-3">
                 Đẳng Cấp
               </span>
             </h2>
@@ -247,11 +248,11 @@ export default function HomePage() {
               <div className="flex items-center justify-center gap-6 text-white">
                 <div className="flex items-center gap-2">
                   <Phone className="w-5 h-5 text-gold-400" />
-                  <span className="font-medium">1900-xxxx</span>
+                  <span className="font-medium">{siteConfig.contact.phone}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <MapPin className="w-5 h-5 text-gold-400" />
-                  <span className="font-medium">40+ Cửa Hàng</span>
+                  <span className="font-medium">{siteConfig.stores.count} Cửa Hàng</span>
                 </div>
               </div>
             </div>

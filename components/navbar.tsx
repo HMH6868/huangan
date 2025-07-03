@@ -5,7 +5,8 @@ import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { Menu, ShoppingCart, User, Heart } from "lucide-react"
+import { Menu } from "lucide-react"
+import { siteConfig } from "@/config/site"
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
@@ -26,7 +27,7 @@ export default function Navbar() {
             <div className="relative">
               <Image
                 src="/logo.png"
-                alt="HN Tea Logo"
+                alt={`${siteConfig.name} Logo`}
                 width={50}
                 height={50}
                 className="rounded-full shadow-lg group-hover:shadow-xl transition-shadow duration-300"
@@ -35,9 +36,9 @@ export default function Navbar() {
             </div>
             <div>
               <span className="text-2xl font-bold bg-gradient-to-r from-navy-800 to-navy-600 bg-clip-text text-transparent">
-                HN Tea
+                {siteConfig.name}
               </span>
-              <div className="text-xs text-gray-500 font-medium">Premium Experience</div>
+              <div className="text-xs text-gray-500 font-medium">{siteConfig.slogan}</div>
             </div>
           </Link>
 
@@ -57,21 +58,6 @@ export default function Navbar() {
 
           {/* Desktop Actions */}
           <div className="hidden lg:flex items-center space-x-4">
-            <Button variant="ghost" size="sm" className="text-navy-700 hover:text-gold-600 hover:bg-gold-50">
-              <Heart className="w-5 h-5 mr-2" />
-              Yêu Thích
-            </Button>
-            <Button variant="ghost" size="sm" className="text-navy-700 hover:text-gold-600 hover:bg-gold-50 relative">
-              <ShoppingCart className="w-5 h-5 mr-2" />
-              Giỏ Hàng
-              <span className="absolute -top-1 -right-1 bg-gold-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                2
-              </span>
-            </Button>
-            <Button variant="ghost" size="sm" className="text-navy-700 hover:text-gold-600 hover:bg-gold-50">
-              <User className="w-5 h-5 mr-2" />
-              Tài Khoản
-            </Button>
             <Button
               size="sm"
               className="bg-gradient-to-r from-gold-500 to-gold-400 hover:from-gold-600 hover:to-gold-500 text-navy-900 shadow-lg hover:shadow-xl transition-all duration-300 px-6 font-semibold"
@@ -100,18 +86,6 @@ export default function Navbar() {
                   </Link>
                 ))}
                 <hr className="border-gold-200" />
-                <Button variant="ghost" className="justify-start text-navy-700 hover:text-gold-600 hover:bg-gold-50">
-                  <Heart className="w-5 h-5 mr-3" />
-                  Yêu Thích
-                </Button>
-                <Button variant="ghost" className="justify-start text-navy-700 hover:text-gold-600 hover:bg-gold-50">
-                  <ShoppingCart className="w-5 h-5 mr-3" />
-                  Giỏ Hàng
-                </Button>
-                <Button variant="ghost" className="justify-start text-navy-700 hover:text-gold-600 hover:bg-gold-50">
-                  <User className="w-5 h-5 mr-3" />
-                  Tài Khoản
-                </Button>
                 <Button className="bg-gradient-to-r from-gold-500 to-gold-400 hover:from-gold-600 hover:to-gold-500 text-navy-900 shadow-lg font-semibold">
                   Đặt Hàng Ngay
                 </Button>
