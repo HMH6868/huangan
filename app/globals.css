@@ -1,0 +1,304 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+    --radius: 0.75rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+}
+
+/* Navy Blue and Gold Color Scheme */
+.text-navy-900 {
+  color: #1e3a8a;
+}
+
+.text-navy-800 {
+  color: #1e40af;
+}
+
+.text-navy-700 {
+  color: #1d4ed8;
+}
+
+.text-navy-600 {
+  color: #2563eb;
+}
+
+.text-navy-100 {
+  color: #dbeafe;
+}
+
+.text-gold-300 {
+  color: #fcd34d;
+}
+
+.text-gold-400 {
+  color: #fbbf24;
+}
+
+.text-gold-500 {
+  color: #f59e0b;
+}
+
+.text-gold-600 {
+  color: #d97706;
+}
+
+.text-cream-100 {
+  color: #fef7ed;
+}
+
+.bg-navy-900 {
+  background-color: #1e3a8a;
+}
+
+.bg-navy-800 {
+  background-color: #1e40af;
+}
+
+.bg-navy-700 {
+  background-color: #1d4ed8;
+}
+
+.bg-navy-600 {
+  background-color: #2563eb;
+}
+
+.bg-navy-100 {
+  background-color: #dbeafe;
+}
+
+.bg-navy-50 {
+  background-color: #eff6ff;
+}
+
+.bg-gold-400 {
+  background-color: #fbbf24;
+}
+
+.bg-gold-500 {
+  background-color: #f59e0b;
+}
+
+.bg-gold-600 {
+  background-color: #d97706;
+}
+
+.bg-gold-100 {
+  background-color: #fef3c7;
+}
+
+.bg-gold-50 {
+  background-color: #fffbeb;
+}
+
+.bg-cream-50 {
+  background-color: #fffbf5;
+}
+
+.bg-cream-100 {
+  background-color: #fef7ed;
+}
+
+.bg-cream-200 {
+  background-color: #fed7aa;
+}
+
+.border-navy-100 {
+  border-color: #dbeafe;
+}
+
+.border-navy-200 {
+  border-color: #bfdbfe;
+}
+
+.border-gold-200 {
+  border-color: #fde68a;
+}
+
+.border-gold-300 {
+  border-color: #fcd34d;
+}
+
+/* Hover states */
+.hover\:bg-navy-700:hover {
+  background-color: #1d4ed8;
+}
+
+.hover\:bg-navy-800:hover {
+  background-color: #1e40af;
+}
+
+.hover\:bg-gold-300:hover {
+  background-color: #fcd34d;
+}
+
+.hover\:bg-gold-500:hover {
+  background-color: #f59e0b;
+}
+
+.hover\:bg-gold-600:hover {
+  background-color: #d97706;
+}
+
+.hover\:bg-navy-50:hover {
+  background-color: #eff6ff;
+}
+
+.hover\:bg-gold-50:hover {
+  background-color: #fffbeb;
+}
+
+.hover\:from-navy-700:hover {
+  --tw-gradient-from: #1d4ed8;
+}
+
+.hover\:to-navy-800:hover {
+  --tw-gradient-to: #1e40af;
+}
+
+.hover\:from-gold-500:hover {
+  --tw-gradient-from: #f59e0b;
+}
+
+.hover\:to-gold-600:hover {
+  --tw-gradient-to: #d97706;
+}
+
+.hover\:text-gold-500:hover {
+  color: #f59e0b;
+}
+
+.hover\:text-navy-600:hover {
+  color: #2563eb;
+}
+
+/* Focus states */
+.focus\:border-gold-400:focus {
+  border-color: #fbbf24;
+}
+
+/* Gradient backgrounds */
+.from-navy-900 {
+  --tw-gradient-from: #1e3a8a;
+}
+
+.via-navy-800 {
+  --tw-gradient-via: #1e40af;
+}
+
+.to-navy-700 {
+  --tw-gradient-to: #1d4ed8;
+}
+
+.from-gold-400 {
+  --tw-gradient-from: #fbbf24;
+}
+
+.to-gold-300 {
+  --tw-gradient-to: #fcd34d;
+}
+
+.from-gold-500 {
+  --tw-gradient-from: #f59e0b;
+}
+
+.to-gold-400 {
+  --tw-gradient-to: #fbbf24;
+}
+
+.from-navy-600 {
+  --tw-gradient-from: #2563eb;
+}
+
+.to-navy-700 {
+  --tw-gradient-to: #1d4ed8;
+}
+
+.from-cream-100 {
+  --tw-gradient-from: #fef7ed;
+}
+
+.to-cream-200 {
+  --tw-gradient-to: #fed7aa;
+}
+
+/* Fill colors */
+.fill-gold-400 {
+  fill: #fbbf24;
+}
+
+.fill-gold-500 {
+  fill: #f59e0b;
+}
+
+/* Custom animations */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Backdrop blur utilities */
+.backdrop-blur-sm {
+  backdrop-filter: blur(4px);
+}
+
+.backdrop-blur-md {
+  backdrop-filter: blur(12px);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #fbbf24;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #f59e0b;
+}
