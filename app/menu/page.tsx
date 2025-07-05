@@ -5,16 +5,37 @@ import { Button } from "@/components/ui/button"
 import { Star, Search, Coffee, IceCream, Filter, X, SlidersHorizontal } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import Image from "next/image"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Slider } from "@/components/ui/slider"
 
+type MenuItem = {
+  id: string;
+  _id: string;
+  name: string;
+  description: string;
+  image: string;
+  rating: number;
+  badge: string;
+  popular: boolean;
+  flavor: string;
+  category: string;
+  available: boolean;
+  prices?: { S: number; M: number; L: number };
+  price?: number;
+}
+
 export default function MenuPage() {
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedSizes, setSelectedSizes] = useState<{ [key: string]: string }>({})
   const [showFilters, setShowFilters] = useState(false)
+
+  // API data states
+  const [menuItems, setMenuItems] = useState<MenuItem[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
   // Filter states
   const [priceRange, setPriceRange] = useState([0, 60000])
@@ -23,257 +44,51 @@ export default function MenuPage() {
   const [showPopularOnly, setShowPopularOnly] = useState(false)
   const [sortBy, setSortBy] = useState("name") // name, price-low, price-high, rating
 
-  // Trà Sữa Menu
-  const milkTeaItems = [
-    {
-      id: "mt1",
-      name: "Trà Sữa Hoàng Gia",
-      prices: { S: 35000, M: 42000, L: 48000 },
-      image: "/placeholder.svg?height=250&width=250",
-      rating: 4.9,
-      description: "Trà Ceylon cao cấp pha với sữa tươi nguyên chất, hương vị đậm đà",
-      badge: "Signature",
-      popular: true,
-      flavor: "classic",
-    },
-    {
-      id: "mt2",
-      name: "Trà Sữa Matcha Nhật Bản",
-      prices: { S: 38000, M: 45000, L: 52000 },
-      image: "/placeholder.svg?height=250&width=250",
-      rating: 4.8,
-      description: "Matcha nguyên chất từ Uji, Nhật Bản với sữa tươi Hokkaido",
-      badge: "Premium",
-      popular: false,
-      flavor: "matcha",
-    },
-    {
-      id: "mt3",
-      name: "Trà Sữa Oolong Đài Loan",
-      prices: { S: 36000, M: 43000, L: 50000 },
-      image: "/placeholder.svg?height=250&width=250",
-      rating: 4.7,
-      description: "Oolong thượng hạng từ núi cao Đài Loan, thơm nồng đặc trưng",
-      badge: "Premium",
-      popular: false,
-      flavor: "tea",
-    },
-    {
-      id: "mt4",
-      name: "Trà Sữa Taro",
-      prices: { S: 33000, M: 40000, L: 46000 },
-      image: "/placeholder.svg?height=250&width=250",
-      rating: 4.6,
-      description: "Hương vị khoai môn tím thơm ngon, béo ngậy tự nhiên",
-      badge: "",
-      popular: true,
-      flavor: "taro",
-    },
-    {
-      id: "mt5",
-      name: "Trà Sữa Chocolate",
-      prices: { S: 34000, M: 41000, L: 47000 },
-      image: "/placeholder.svg?height=250&width=250",
-      rating: 4.5,
-      description: "Chocolate Bỉ cao cấp kết hợp với trà đen thơm lừng",
-      badge: "",
-      popular: false,
-      flavor: "chocolate",
-    },
-    {
-      id: "mt6",
-      name: "Trà Sữa Dâu Tây",
-      prices: { S: 35000, M: 42000, L: 48000 },
-      image: "/placeholder.svg?height=250&width=250",
-      rating: 4.7,
-      description: "Dâu tây tươi nguyên chất, vị chua ngọt hài hòa",
-      badge: "New",
-      popular: false,
-      flavor: "fruit",
-    },
-    {
-      id: "mt7",
-      name: "Trà Sữa Vanilla",
-      prices: { S: 33000, M: 40000, L: 46000 },
-      image: "/placeholder.svg?height=250&width=250",
-      rating: 4.6,
-      description: "Vanilla Madagascar thơm nồng, vị ngọt thanh tao",
-      badge: "",
-      popular: false,
-      flavor: "vanilla",
-    },
-    {
-      id: "mt8",
-      name: "Trà Sữa Caramel",
-      prices: { S: 36000, M: 43000, L: 49000 },
-      image: "/placeholder.svg?height=250&width=250",
-      rating: 4.8,
-      description: "Caramel tự làm đậm đà, ngọt thơm khó cưỡng",
-      badge: "",
-      popular: false,
-      flavor: "caramel",
-    },
-    {
-      id: "mt9",
-      name: "Trà Sữa Phô Mai Muối",
-      prices: { S: 40000, M: 47000, L: 54000 },
-      image: "/placeholder.svg?height=250&width=250",
-      rating: 4.9,
-      description: "Phô mai muối Hokkaido, vị mặn ngọt độc đáo",
-      badge: "Signature",
-      popular: true,
-      flavor: "cheese",
-    },
-    {
-      id: "mt10",
-      name: "Brown Sugar Milk Tea",
-      prices: { S: 38000, M: 45000, L: 52000 },
-      image: "/placeholder.svg?height=250&width=250",
-      rating: 4.8,
-      description: "Đường nâu Đài Loan thủ công, trân châu đen mềm dẻo",
-      badge: "Trending",
-      popular: true,
-      flavor: "brown-sugar",
-    },
-  ]
+  // Fetch menu items from API
+  useEffect(() => {
+    const fetchMenuItems = async () => {
+      try {
+        const response = await fetch('https://huanganbackend.onrender.com/api/menu-items')
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`)
+        }
+        const data = await response.json()
+        
+        // Transform API data to match our component's expected structure
+        const transformedData = data.map((item: any) => ({
+          id: item._id,
+          _id: item._id,
+          name: item.name,
+          description: item.description,
+          image: item.image || "/placeholder.svg?height=250&width=250",
+          rating: item.rating,
+          badge: item.badge || "",
+          popular: item.popular || false,
+          flavor: item.flavor || "",
+          category: item.category,
+          available: item.available,
+          prices: item.prices,
+          price: item.price,
+        }))
+        
+        setMenuItems(transformedData)
+        setLoading(false)
+      } catch (err) {
+        console.error("Failed to fetch menu items:", err)
+        setError("Failed to load menu items. Please try again later.")
+        setLoading(false)
+      }
+    }
+    
+    fetchMenuItems()
+  }, [])
 
-  // Kem Menu
-  const iceCreamItems = [
-    {
-      id: "ic1",
-      name: "Kem Vanilla Cổ Điển",
-      price: 25000,
-      image: "/placeholder.svg?height=250&width=250",
-      rating: 4.7,
-      description: "Kem vanilla truyền thống với hương vị thuần khiết",
-      badge: "Classic",
-      popular: true,
-      flavor: "vanilla",
-    },
-    {
-      id: "ic2",
-      name: "Kem Chocolate Đậm Đà",
-      price: 28000,
-      image: "/placeholder.svg?height=250&width=250",
-      rating: 4.8,
-      description: "Kem chocolate Bỉ cao cấp, đậm đà khó cưỡng",
-      badge: "",
-      popular: true,
-      flavor: "chocolate",
-    },
-    {
-      id: "ic3",
-      name: "Kem Dâu Tây Tươi",
-      price: 30000,
-      image: "/placeholder.svg?height=250&width=250",
-      rating: 4.6,
-      description: "Kem dâu tây với miếng dâu tươi thật bên trong",
-      badge: "Fresh",
-      popular: false,
-      flavor: "fruit",
-    },
-    {
-      id: "ic4",
-      name: "Kem Matcha Nhật Bản",
-      price: 35000,
-      image: "/placeholder.svg?height=250&width=250",
-      rating: 4.9,
-      description: "Kem matcha nguyên chất từ Uji, vị đắng nhẹ thanh tao",
-      badge: "Premium",
-      popular: false,
-      flavor: "matcha",
-    },
-    {
-      id: "ic5",
-      name: "Kem Taro Tím",
-      price: 32000,
-      image: "/placeholder.svg?height=250&width=250",
-      rating: 4.5,
-      description: "Kem khoai môn tím thơm ngon, màu sắc bắt mắt",
-      badge: "",
-      popular: false,
-      flavor: "taro",
-    },
-    {
-      id: "ic6",
-      name: "Kem Cookies & Cream",
-      price: 33000,
-      image: "/placeholder.svg?height=250&width=250",
-      rating: 4.7,
-      description: "Kem vanilla với bánh quy Oreo giòn tan",
-      badge: "",
-      popular: true,
-      flavor: "cookies",
-    },
-    {
-      id: "ic7",
-      name: "Kem Caramel Muối",
-      price: 34000,
-      image: "/placeholder.svg?height=250&width=250",
-      rating: 4.8,
-      description: "Kem caramel với chút muối biển, vị ngọt mặn hài hòa",
-      badge: "Signature",
-      popular: false,
-      flavor: "caramel",
-    },
-    {
-      id: "ic8",
-      name: "Kem Coconut",
-      price: 29000,
-      image: "/placeholder.svg?height=250&width=250",
-      rating: 4.4,
-      description: "Kem dừa tươi mát, hương vị nhiệt đới",
-      badge: "",
-      popular: false,
-      flavor: "coconut",
-    },
-    {
-      id: "ic9",
-      name: "Kem Mango Tango",
-      price: 31000,
-      image: "/placeholder.svg?height=250&width=250",
-      rating: 4.6,
-      description: "Kem xoài tươi ngọt lịm, cảm giác nhiệt đới",
-      badge: "Tropical",
-      popular: false,
-      flavor: "fruit",
-    },
-    {
-      id: "ic10",
-      name: "Kem Tiramisu",
-      price: 38000,
-      image: "/placeholder.svg?height=250&width=250",
-      rating: 4.9,
-      description: "Kem tiramisu Ý với cà phê espresso đậm đà",
-      badge: "Premium",
-      popular: false,
-      flavor: "coffee",
-    },
-    {
-      id: "ic11",
-      name: "Kem Rum Raisin",
-      price: 36000,
-      image: "/placeholder.svg?height=250&width=250",
-      rating: 4.5,
-      description: "Kem nho khô ngâm rum, hương vị người lớn",
-      badge: "Adult",
-      popular: false,
-      flavor: "rum",
-    },
-    {
-      id: "ic12",
-      name: "Kem Black Sesame",
-      price: 33000,
-      image: "/placeholder.svg?height=250&width=250",
-      rating: 4.7,
-      description: "Kem mè đen thơm bùi, hương vị Á Đông độc đáo",
-      badge: "Unique",
-      popular: false,
-      flavor: "sesame",
-    },
-  ]
+  // Get milk tea and ice cream items from the fetched data
+  const milkTeaItems = menuItems.filter(item => item.category === 'milktea')
+  const iceCreamItems = menuItems.filter(item => item.category === 'icecream')
 
-  const badges = ["Signature", "Premium", "Trending", "New", "Classic", "Fresh", "Tropical", "Adult", "Unique"]
+  // Extract unique badges and flavors from API data
+  const badges = Array.from(new Set(menuItems.map(item => item.badge).filter(Boolean)))
 
   const milkTeaFlavors = [
     { id: "classic", name: "Trà Cổ Điển" },
@@ -308,7 +123,7 @@ export default function MenuPage() {
 
   const getItemPrice = (item: any) => {
     if (item.price) return item.price
-    return item.prices["S"] // Default size
+    return item.prices?.S || 0 // Default size
   }
 
   const filterAndSortItems = (items: any[], currentTab: string) => {
@@ -377,6 +192,31 @@ export default function MenuPage() {
 
   const setSelectedSize = (itemId: string, size: string) => {
     setSelectedSizes({ ...selectedSizes, [itemId]: size })
+  }
+
+  // Show loading state
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-cream-50 to-white flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-2xl font-bold text-navy-900 mb-2">Đang tải menu...</div>
+          <p className="text-gray-600">Vui lòng đợi trong giây lát</p>
+        </div>
+      </div>
+    )
+  }
+
+  // Show error state
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-cream-50 to-white flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-2xl font-bold text-red-600 mb-2">Lỗi</div>
+          <p className="text-gray-600 mb-4">{error}</p>
+          <Button onClick={() => window.location.reload()}>Thử lại</Button>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -514,7 +354,7 @@ export default function MenuPage() {
                         <Checkbox
                           checked={selectedBadges.includes(badge)}
                           onCheckedChange={(checked) => {
-                            if (checked) {
+                            if (checked === true) {
                               setSelectedBadges([...selectedBadges, badge])
                             } else {
                               setSelectedBadges(selectedBadges.filter((b) => b !== badge))
@@ -532,7 +372,14 @@ export default function MenuPage() {
                   <h4 className="font-medium text-navy-800 mb-3 text-sm lg:text-base">Khác</h4>
                   <div className="space-y-2">
                     <label className="flex items-center space-x-2 cursor-pointer">
-                      <Checkbox checked={showPopularOnly} onCheckedChange={setShowPopularOnly} />
+                      <Checkbox 
+                        checked={showPopularOnly} 
+                        onCheckedChange={(checked) => {
+                          if (typeof checked === 'boolean') {
+                            setShowPopularOnly(checked)
+                          }
+                        }} 
+                      />
                       <span className="text-xs lg:text-sm">Món phổ biến</span>
                     </label>
                   </div>
@@ -668,29 +515,31 @@ export default function MenuPage() {
                         <div className="flex justify-between items-center mb-2">
                           <span className="text-xs lg:text-sm font-medium text-gray-700">Size:</span>
                           <span className="text-base lg:text-lg font-bold text-gold-600">
-                            {formatPrice(item.prices[getSelectedSize(item.id) as keyof typeof item.prices])}
+                            {item.prices && formatPrice(item.prices[getSelectedSize(item.id) as keyof typeof item.prices] as number)}
                           </span>
                         </div>
-                        <div className="grid grid-cols-3 gap-1 lg:gap-2">
-                          {Object.entries(item.prices).map(([size, price]) => (
-                            <Button
-                              key={size}
-                              variant={getSelectedSize(item.id) === size ? "default" : "outline"}
-                              size="sm"
-                              className={`h-auto py-2 lg:py-3 ${
-                                getSelectedSize(item.id) === size
-                                  ? "bg-navy-600 text-white hover:bg-navy-700"
-                                  : "border-navy-200 text-navy-700 hover:bg-navy-50"
-                              }`}
-                              onClick={() => setSelectedSize(item.id, size)}
-                            >
-                              <div className="text-center">
-                                <div className="font-semibold text-xs lg:text-sm">{size}</div>
-                                <div className="text-xs">{formatPrice(price)}</div>
-                              </div>
-                            </Button>
-                          ))}
-                        </div>
+                        {item.prices && (
+                          <div className="grid grid-cols-3 gap-1 lg:gap-2">
+                            {Object.entries(item.prices).map(([size, price]) => (
+                              <Button
+                                key={size}
+                                variant={getSelectedSize(item.id) === size ? "default" : "outline"}
+                                size="sm"
+                                className={`h-auto py-2 lg:py-3 ${
+                                  getSelectedSize(item.id) === size
+                                    ? "bg-navy-600 text-white hover:bg-navy-700"
+                                    : "border-navy-200 text-navy-700 hover:bg-navy-50"
+                                }`}
+                                onClick={() => setSelectedSize(item.id, size)}
+                              >
+                                <div className="text-center">
+                                  <div className="font-semibold text-xs lg:text-sm">{size}</div>
+                                  <div className="text-xs">{formatPrice(price as number)}</div>
+                                </div>
+                              </Button>
+                            ))}
+                          </div>
+                        )}
                       </div>
 
                       {/* Order Button */}
@@ -815,7 +664,7 @@ export default function MenuPage() {
 
                     <CardContent className="pt-0 p-3 lg:p-6 lg:pt-0">
                       <div className="flex items-center justify-between mb-3 lg:mb-4">
-                        <span className="text-base lg:text-xl font-bold text-gold-600">{formatPrice(item.price)}</span>
+                        <span className="text-base lg:text-xl font-bold text-gold-600">{item.price && formatPrice(item.price)}</span>
                       </div>
 
                       <Button className="w-full bg-gradient-to-r from-gold-500 to-gold-400 hover:from-gold-600 hover:to-gold-500 text-navy-900 h-10 lg:h-auto text-sm lg:text-base">
