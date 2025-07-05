@@ -1,45 +1,47 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { MapPin, Phone, Clock, Navigation, Star, Wifi, Car, CreditCard, Coffee, Users, Calendar } from "lucide-react"
+import { MapPin, Phone, Clock, Navigation, Star, Wifi, Layout, CreditCard, Coffee, Users, Calendar } from "lucide-react"
 import Image from "next/image"
+import Link from "next/link"
+import { siteConfig } from "@/config/site"
 
 export default function StoresPage() {
   const mainStore = {
-    name: "HN Tea Flagship Store",
-    address: "123 Đường Nguyễn Huệ, Quận 1, TP.HCM",
-    phone: "028-xxxx-xxxx",
-    hours: "7:00 - 22:00",
-    image: "/placeholder.svg?height=400&width=600",
+    name: siteConfig.name,
+    address: siteConfig.contact.address,
+    phone: siteConfig.contact.phone,
+    hours: siteConfig.stores.locations[0].hours,
+    image: "/store.webp?height=400&width=600",
     rating: 4.9,
-    reviews: 1250,
+    reviews: 32,
     features: [
       { name: "Wifi miễn phí", icon: Wifi },
       { name: "Không gian VIP", icon: Users },
-      { name: "Chỗ ngồi 80+", icon: Coffee },
-      { name: "Parking miễn phí", icon: Car },
+      { name: "Chỗ ngồi", icon: Coffee },
+      { name: "Có mặt trên các app", icon: Layout },
       { name: "Thanh toán QR", icon: CreditCard },
       { name: "Giao hàng tận nơi", icon: Navigation },
     ],
-    specialty: "Flagship Store",
-    description: "Cửa hàng đầu tiên và lớn nhất của HN Tea với không gian sang trọng, hiện đại và đầy đủ tiện nghi.",
+    specialty: "Cửa hàng chính",
+    description: "Cửa hàng đầu tiên của Hứa Ngân Milk Tea với không gian sang trọng, hiện đại và đầy đủ tiện nghi.",
     highlights: [
-      "Không gian 200m² với thiết kế hiện đại",
-      "Khu vực VIP riêng biệt cho khách hàng thân thiết",
-      "Menu đầy đủ với hơn 50 loại đồ uống",
-      "Đội ngũ barista chuyên nghiệp được đào tạo bài bản",
-      "Phục vụ từ 7:00 sáng đến 22:00 tối hàng ngày",
+      "Không gian với thiết kế hiện đại",
+      "Khu vực cho khách hàng mua về thoải mái",
+      "Menu đầy đủ với hơn 30 loại đồ uống",
+      "Đội ngũ chuyên nghiệp được đào tạo bài bản",
+      "Phục vụ từ 9:00 sáng đến 22:00 tối hàng ngày",
     ],
   }
 
   const operatingHours = [
-    { day: "Thứ 2 - Thứ 6", hours: "7:00 - 22:00" },
-    { day: "Lễ Tết", hours: "8:00 - 21:00" },
+    { day: "Thứ 2 - Chủ Nhật", hours: "9:00 - 22:00" },
+    { day: "Lễ - Tết", hours: "Có Thể Thay Đổi" },
   ]
 
   const expansionPlans = [
-    { location: "Quận 3, TP.HCM", timeline: "Q2 2024", status: "Đang khảo sát" },
-    { location: "Quận 7, TP.HCM", timeline: "Q3 2024", status: "Đang tìm mặt bằng" },
-    { location: "Hà Nội", timeline: "Q4 2024", status: "Lên kế hoạch" },
+    { location: "?, TP.HCM", timeline: "Q2 2024", status: "Đang khảo sát" },
+    { location: "?, TP.HCM", timeline: "Q3 2024", status: "Đang tìm mặt bằng" },
+    { location: "?, TP.HCM", timeline: "Q4 2024", status: "Lên kế hoạch" },
   ]
 
   return (
@@ -50,16 +52,16 @@ export default function StoresPage() {
           <div className="text-center max-w-4xl mx-auto">
             <div className="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 mb-6">
               <MapPin className="w-4 h-4 mr-2 text-gold-400" />
-              <span className="text-sm font-medium">Our Premium Location</span>
+              <span className="text-sm font-medium">Địa Chỉ {siteConfig.name}</span>
             </div>
             <h1 className="text-5xl lg:text-7xl font-bold mb-6">
               Cửa Hàng
-              <span className="block text-transparent bg-gradient-to-r from-gold-400 to-gold-300 bg-clip-text">
-                HN Tea
+              <span className="block text-transparent bg-gradient-to-r from-gold-400 to-gold-300 bg-clip-text pb-2 pt-2">
+                {siteConfig.name}
               </span>
             </h1>
             <p className="text-xl text-navy-100 leading-relaxed">
-              Khám phá không gian trà sữa cao cấp đầu tiên của chúng tôi tại trung tâm Sài Gòn
+              Khám phá không gian trà sữa cao cấp đầu tiên của chúng tôi tại Sài Gòn
             </p>
           </div>
         </div>
@@ -94,6 +96,19 @@ export default function StoresPage() {
                       <span className="text-sm text-gray-600">({mainStore.reviews} đánh giá)</span>
                     </div>
                   </div>
+                  
+                  {/* Google Maps Embed */}
+                  <div className="absolute bottom-4 right-4 w-32 h-32 rounded-lg overflow-hidden border-2 border-white shadow-lg">
+                    <iframe 
+                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.212721031289!2d106.6290037!3d10.795013400000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752ffacec9760d%3A0xbdc12b9f9a88cf21!2zSOG7qWEgTmfDom4gTWlsayBUZWE!5e0!3m2!1svi!2s!4v1751708515455!5m2!1svi!2s" 
+                      width="100%" 
+                      height="100%" 
+                      style={{ border: 0 }} 
+                      allowFullScreen 
+                      loading="lazy" 
+                      referrerPolicy="no-referrer-when-downgrade"
+                    ></iframe>
+                  </div>
                 </div>
 
                 <div className="p-8 lg:p-12 flex flex-col justify-center">
@@ -116,16 +131,21 @@ export default function StoresPage() {
                   </div>
 
                   <div className="flex gap-4">
-                    <Button className="flex-1 bg-gradient-to-r from-navy-600 to-navy-700 hover:from-navy-700 hover:to-navy-800 text-white shadow-lg hover:shadow-xl transition-all duration-300 py-3">
-                      <Navigation className="w-4 h-4 mr-2" />
-                      Chỉ Đường
+                    <Button asChild className="flex-1 bg-gradient-to-r from-navy-600 to-navy-700 hover:from-navy-700 hover:to-navy-800 text-white shadow-lg hover:shadow-xl transition-all duration-300 py-3">
+                      <Link href={`${siteConfig.stores.locations[0].googleMaps}`}>
+                        <Navigation className="w-4 h-4 mr-2" />
+                        Chỉ Đường
+                      </Link>
                     </Button>
                     <Button
+                      asChild
                       variant="outline"
                       className="flex-1 border-2 border-gold-400 text-gold-600 hover:bg-gold-50 bg-transparent py-3"
                     >
-                      <Phone className="w-4 h-4 mr-2" />
-                      Gọi Ngay
+                      <Link href={`tel:${siteConfig.stores.locations[0].phone}`}>
+                        <Phone className="w-4 h-4 mr-2" />
+                        Gọi Ngay
+                      </Link>
                     </Button>
                   </div>
                 </div>
@@ -197,7 +217,7 @@ export default function StoresPage() {
             </div>
             <h2 className="text-4xl lg:text-5xl font-bold text-navy-900 mb-6">
               Sắp Có Thêm
-              <span className="block text-transparent bg-gradient-to-r from-gold-500 to-gold-400 bg-clip-text">
+              <span className="block text-transparent bg-gradient-to-r from-gold-500 to-gold-400 bg-clip-text pb-1 pt-1">
                 Cửa Hàng Mới
               </span>
             </h2>
@@ -238,7 +258,7 @@ export default function StoresPage() {
           <div className="text-center max-w-4xl mx-auto">
             <h3 className="text-4xl font-bold mb-6">
               Quan Tâm Đến
-              <span className="block text-transparent bg-gradient-to-r from-gold-400 to-gold-300 bg-clip-text">
+              <span className="block text-transparent bg-gradient-to-r from-gold-400 to-gold-300 bg-clip-text pb-1 pt-1">
                 Nhượng Quyền?
               </span>
             </h3>
