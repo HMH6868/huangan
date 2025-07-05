@@ -70,7 +70,7 @@ export default function HomePage() {
               <div className="space-y-6">
                 <h1 className="text-5xl lg:text-7xl font-bold leading-tight">
                   Nghệ Thuật
-                  <span className="block text-transparent bg-gradient-to-r from-gold-400 to-gold-300 bg-clip-text">
+                  <span className="block text-transparent bg-gradient-to-r from-gold-400 to-gold-300 bg-clip-text pb-2 pt-2">
                     Trà Sữa
                   </span>
                 </h1>
@@ -102,7 +102,7 @@ export default function HomePage() {
               <div className="absolute inset-0 bg-gradient-to-r from-gold-400/20 to-navy-400/20 rounded-3xl blur-3xl"></div>
               <div className="relative bg-white/10 backdrop-blur-sm rounded-3xl p-8 border border-white/20">
                 <Image
-                  src="/logo.png"
+                  src="/logo.webp"
                   alt={`${siteConfig.name} Premium`}
                   width={200}
                   height={200}

@@ -1,7 +1,7 @@
 // Site configuration
 export const siteConfig = {
   // Business information
-  name: "HỨA NGÂN MILKTEA",
+  name: "HỨA NGÂN MILK TEA",
   slogan: "Trà sữa truyền thống",
   contact: {
     phone: "0933-482-000",

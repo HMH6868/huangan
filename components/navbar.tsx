@@ -26,7 +26,7 @@ export default function Navbar() {
           <Link href="/" className="flex items-center space-x-3 group">
             <div className="relative">
               <Image
-                src="/logo.png"
+                src="/logo.webp"
                 alt={`${siteConfig.name} Logo`}
                 width={50}
                 height={50}
