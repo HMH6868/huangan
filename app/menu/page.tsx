@@ -48,7 +48,8 @@ export default function MenuPage() {
   useEffect(() => {
     const fetchMenuItems = async () => {
       try {
-        const response = await fetch('https://huanganbackend.onrender.com/api/menu-items')
+        // Thay đổi URL để sử dụng API route local thay vì gọi trực tiếp đến API bên ngoài
+        const response = await fetch('/api/menu')
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`)
         }
