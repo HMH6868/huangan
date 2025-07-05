@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 
 export async function GET() {
   try {
-    const response = await fetch('https://huanganbackend.onrender.com/api/menu-items', {
+    const response = await fetch('https://huanganbackend.vercel.app/api/menu-items', {
       cache: 'no-store',
       headers: {
         'Content-Type': 'application/json',
