@@ -2,14 +2,15 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { MapPin, Clock, DollarSign, Users, Award, Heart, Sparkles, Mail, Phone } from "lucide-react"
+import { siteConfig } from "@/config/site"
 
 export default function RecruitmentPage() {
   const jobPositions = [
     {
-      title: "Senior Barista",
+      title: "Nhân Viên Pha Chế",
       location: "TP.HCM",
-      type: "Toàn thời gian",
-      salary: "12-18 triệu",
+      type: "Thời gian linh động",
+      salary: "? triệu",
       level: "Senior",
       requirements: [
         "Kinh nghiệm pha chế từ 2 năm trở lên",
@@ -25,10 +26,10 @@ export default function RecruitmentPage() {
       ],
     },
     {
-      title: "Store Manager",
-      location: "Hà Nội",
-      type: "Toàn thời gian",
-      salary: "20-25 triệu",
+      title: "Nhân Viên Bán Hàng",
+      location: "TP.HCM",
+      type: "Thời gian linh động",
+      salary: "? triệu",
       level: "Manager",
       requirements: [
         "Kinh nghiệm quản lý cửa hàng F&B từ 3 năm",
@@ -42,45 +43,7 @@ export default function RecruitmentPage() {
         "Cơ hội phát triển thành Regional Manager",
         "Du lịch công ty hàng năm",
       ],
-    },
-    {
-      title: "Marketing Specialist",
-      location: "TP.HCM",
-      type: "Toàn thời gian",
-      salary: "15-20 triệu",
-      level: "Specialist",
-      requirements: [
-        "Kinh nghiệm marketing digital từ 2 năm",
-        "Thành thạo Facebook Ads, Google Ads",
-        "Kỹ năng content creation và design cơ bản",
-        "Tư duy sáng tạo và phân tích dữ liệu",
-      ],
-      benefits: [
-        "Môi trường làm việc sáng tạo",
-        "Được học hỏi từ các chuyên gia",
-        "Thưởng theo hiệu quả campaign",
-        "Flexible working time",
-      ],
-    },
-    {
-      title: "Part-time Barista",
-      location: "Đà Nẵng",
-      type: "Bán thời gian",
-      salary: "50.000đ/giờ",
-      level: "Entry",
-      requirements: [
-        "Sinh viên hoặc người có thời gian rảnh",
-        "Yêu thích ngành F&B",
-        "Thái độ học hỏi và nhiệt tình",
-        "Có thể làm tối và cuối tuần",
-      ],
-      benefits: [
-        "Lương theo giờ hấp dẫn",
-        "Được đào tạo kỹ năng pha chế",
-        "Môi trường trẻ trung, năng động",
-        "Cơ hội chuyển full-time",
-      ],
-    },
+    }
   ]
 
   const companyValues = [
@@ -114,16 +77,13 @@ export default function RecruitmentPage() {
           <div className="text-center max-w-4xl mx-auto">
             <div className="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 mb-6">
               <Users className="w-4 h-4 mr-2 text-gold-400" />
-              <span className="text-sm font-medium">Join Our Premium Team</span>
+              <span className="text-sm font-medium">Tham Gia Đội Ngũ</span>
             </div>
             <h1 className="text-5xl lg:text-7xl font-bold mb-6">
               Tuyển Dụng
-              <span className="block text-transparent bg-gradient-to-r from-gold-400 to-gold-300 bg-clip-text">
-                Nhân Tài
-              </span>
             </h1>
             <p className="text-xl text-navy-100 leading-relaxed">
-              Gia nhập đội ngũ HN Tea - Nơi khởi đầu sự nghiệp và phát triển tài năng của bạn
+              Gia nhập đội ngũ {siteConfig.name} ngay
             </p>
           </div>
         </div>
@@ -135,8 +95,8 @@ export default function RecruitmentPage() {
           <div className="text-center mb-16">
             <h2 className="text-4xl lg:text-5xl font-bold text-navy-900 mb-6">
               Giá Trị Cốt Lõi
-              <span className="block text-transparent bg-gradient-to-r from-gold-500 to-gold-400 bg-clip-text">
-                HN Tea
+              <span className="block text-transparent bg-gradient-to-r from-gold-500 to-gold-400 bg-clip-text mt-1 pt-1 ">
+                {siteConfig.name} ngay
               </span>
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
@@ -171,7 +131,7 @@ export default function RecruitmentPage() {
             </div>
             <h2 className="text-4xl lg:text-5xl font-bold text-navy-900 mb-6">Vị Trí Đang Tuyển</h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Khám phá những cơ hội nghề nghiệp hấp dẫn tại HN Tea
+              Khám phá những cơ hội nghề nghiệp hấp dẫn tại {siteConfig.name} 
             </p>
           </div>
 
@@ -269,17 +229,17 @@ export default function RecruitmentPage() {
               </span>
             </h3>
             <p className="text-xl text-navy-100 mb-8 leading-relaxed">
-              Hãy gửi CV của bạn cho chúng tôi. HN Tea luôn chào đón những tài năng mới và sẵn sàng tạo cơ hội cho những
+              Hãy gửi CV của bạn cho chúng tôi. {siteConfig.name} luôn chào đón những tài năng mới và sẵn sàng tạo cơ hội cho những
               người có đam mê
             </p>
-            <div className="grid md:grid-cols-2 gap-8 max-w-2xl mx-auto">
+            <div className="grid md:grid-cols-2 gap-8 max-w-1xl mx-auto">
               <div className="flex items-center justify-center gap-4 bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
                 <div className="w-12 h-12 bg-gold-500 rounded-full flex items-center justify-center">
                   <Mail className="w-6 h-6 text-white" />
                 </div>
                 <div className="text-left">
                   <p className="text-navy-100 text-sm">Email HR</p>
-                  <p className="text-xl font-semibold">hr@hntea.com</p>
+                  <p className="text-xl font-semibold">{siteConfig.contact.email} </p>
                 </div>
               </div>
               <div className="flex items-center justify-center gap-4 bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
@@ -288,7 +248,7 @@ export default function RecruitmentPage() {
                 </div>
                 <div className="text-left">
                   <p className="text-navy-100 text-sm">Hotline Tuyển Dụng</p>
-                  <p className="text-xl font-semibold">1900-xxxx</p>
+                  <p className="text-xl font-semibold">{siteConfig.contact.phone}</p>
                 </div>
               </div>
             </div>
