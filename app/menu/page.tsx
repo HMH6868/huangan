@@ -223,7 +223,7 @@ export default function MenuPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-cream-50 to-white">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-navy-900 via-navy-800 to-navy-700 text-white py-12 lg:py-16">
+      {/* <section className="bg-gradient-to-br from-navy-900 via-navy-800 to-navy-700 text-white py-12 lg:py-16">
         <div className="container mx-auto px-4">
           <div className="text-center max-w-4xl mx-auto">
             <div className="inline-flex items-center px-3 py-1.5 lg:px-4 lg:py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 mb-4 lg:mb-6">
@@ -241,17 +241,17 @@ export default function MenuPage() {
             </p>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Search and Filter Bar */}
-      <section className="py-4 lg:py-6 bg-white shadow-sm sticky top-16 lg:top-20 z-40">
+      <section className="py-2 lg:py-3 bg-white shadow-sm sticky top-16 lg:top-20 z-40">
         <div className="container mx-auto px-4">
-          <div className="flex flex-col gap-3 lg:flex-row lg:gap-4 lg:items-center lg:justify-between">
+          <div className="flex flex-col gap-2 lg:flex-row lg:gap-3 lg:items-center lg:justify-between">
             <div className="relative w-full lg:flex-1 lg:max-w-md">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 lg:w-5 lg:h-5" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 lg:w-4 lg:h-4" />
               <Input
                 placeholder="Tìm kiếm..."
-                className="pl-9 lg:pl-10 border-gray-200 focus:border-navy-500 h-10 lg:h-auto text-sm lg:text-base"
+                className="pl-9 lg:pl-9 border-gray-200 focus:border-navy-500 h-8 lg:h-9 text-xs lg:text-sm"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
@@ -260,13 +260,13 @@ export default function MenuPage() {
             <Button
               variant="outline"
               size="sm"
-              className="border-navy-200 text-navy-700 hover:bg-navy-50 bg-transparent relative w-full lg:w-auto justify-center lg:justify-start"
+              className="border-navy-200 text-navy-700 hover:bg-navy-50 bg-transparent relative w-full lg:w-auto justify-center lg:justify-start h-8 lg:h-9 text-xs"
               onClick={() => setShowFilters(!showFilters)}
             >
-              <SlidersHorizontal className="w-4 h-4 mr-2" />
+              <SlidersHorizontal className="w-3.5 h-3.5 mr-1.5" />
               Bộ Lọc
               {getActiveFiltersCount() > 0 && (
-                <span className="absolute -top-1 -right-1 lg:-top-2 lg:-right-2 bg-gold-500 text-white text-xs rounded-full w-4 h-4 lg:w-5 lg:h-5 flex items-center justify-center">
+                <span className="absolute -top-1 -right-1 lg:-top-1.5 lg:-right-1.5 bg-gold-500 text-white text-xs rounded-full w-4 h-4 lg:w-4 lg:h-4 flex items-center justify-center">
                   {getActiveFiltersCount()}
                 </span>
               )}
