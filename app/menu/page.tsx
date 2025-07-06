@@ -403,7 +403,6 @@ export default function MenuPage() {
                 <Coffee className="w-3 h-3 lg:w-4 lg:h-4" />
                 <span className="hidden sm:inline">Trà Sữa</span>
                 <span className="sm:hidden">Trà</span>
-                <span className="text-xs">({filterAndSortItems(milkTeaItems, "milk-tea").length})</span>
               </TabsTrigger>
               <TabsTrigger
                 value="ice-cream"
@@ -412,7 +411,6 @@ export default function MenuPage() {
                 <IceCream className="w-3 h-3 lg:w-4 lg:h-4" />
                 <span className="hidden sm:inline">Kem</span>
                 <span className="sm:hidden">Kem</span>
-                <span className="text-xs">({filterAndSortItems(iceCreamItems, "ice-cream").length})</span>
               </TabsTrigger>
             </TabsList>
 
@@ -446,20 +444,17 @@ export default function MenuPage() {
               </div>
 
               <div className="text-center mb-8">
-                <h2 className="text-3xl font-bold text-navy-900 mb-4">Trà Sữa Thủ Công</h2>
+                {/* <h2 className="text-3xl font-bold text-navy-900 mb-4">Trà Sữa Thủ Công</h2>
                 <p className="text-gray-600 max-w-2xl mx-auto">
                   Trà sữa được pha chế thủ công từ những lá trà cao cấp nhất, kết hợp với sữa tươi nguyên chất
-                </p>
-                <p className="text-sm text-gray-500 mt-2">
-                  Hiển thị {filterAndSortItems(milkTeaItems, "milk-tea").length} / {milkTeaItems.length} sản phẩm
-                </p>
+                </p> */}
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-8">
                 {filterAndSortItems(milkTeaItems, "milk-tea").map((item) => (
                   <Card
                     key={item.id}
-                    className="group hover:shadow-xl transition-all duration-300 border-0 bg-white/90 backdrop-blur-sm overflow-hidden"
+                    className="group hover:shadow-xl transition-all duration-300 border-0 bg-white/90 backdrop-blur-sm overflow-hidden flex flex-col h-full"
                   >
                     <div className="relative">
                       <div className="aspect-square bg-gradient-to-br from-cream-100 to-cream-200 overflow-hidden">
@@ -501,7 +496,7 @@ export default function MenuPage() {
                       </div>
                     </div>
 
-                    <CardHeader className="pb-2 lg:pb-3 p-3 lg:p-6">
+                    <CardHeader className="pb-2 lg:pb-3 p-3 lg:p-6 flex-grow-0">
                       <CardTitle className="text-base lg:text-xl font-bold text-navy-900 leading-tight">
                         {item.name}
                       </CardTitle>
@@ -510,7 +505,7 @@ export default function MenuPage() {
                       </p>
                     </CardHeader>
 
-                    <CardContent className="pt-0 p-3 lg:p-6 lg:pt-0">
+                    <CardContent className="pt-0 p-3 lg:p-6 lg:pt-0 flex flex-col flex-grow justify-between">
                       {/* Size Selection */}
                       <div className="mb-3 lg:mb-4">
                         <div className="flex justify-between items-center mb-2">
@@ -544,12 +539,18 @@ export default function MenuPage() {
                       </div>
 
                       {/* Order Button */}
-                      <Button className="w-full bg-gradient-to-r from-navy-600 to-navy-700 hover:from-navy-700 hover:to-navy-800 text-white h-10 lg:h-auto text-sm lg:text-base">
+                      <Button className="w-full bg-gradient-to-r from-navy-600 to-navy-700 hover:from-navy-700 hover:to-navy-800 text-white h-10 lg:h-auto text-sm lg:text-base mt-auto">
                         Đặt Hàng Ngay
                       </Button>
                     </CardContent>
                   </Card>
                 ))}
+              </div>
+
+              <div className="text-center mt-6">
+                <p className="text-sm text-gray-500">
+                  Hiển thị {filterAndSortItems(milkTeaItems, "milk-tea").length} / {milkTeaItems.length} sản phẩm
+                </p>
               </div>
 
               {filterAndSortItems(milkTeaItems, "milk-tea").length === 0 && (
@@ -593,20 +594,17 @@ export default function MenuPage() {
               </div>
 
               <div className="text-center mb-8">
-                <h2 className="text-3xl font-bold text-navy-900 mb-4">Kem Tươi Ngon</h2>
+                {/* <h2 className="text-3xl font-bold text-navy-900 mb-4">Kem Tươi Ngon</h2>
                 <p className="text-gray-600 max-w-2xl mx-auto">
                   Kem tươi được làm từ sữa tươi nguyên chất và các nguyên liệu tự nhiên, mang đến hương vị đậm đà
-                </p>
-                <p className="text-sm text-gray-500 mt-2">
-                  Hiển thị {filterAndSortItems(iceCreamItems, "ice-cream").length} / {iceCreamItems.length} sản phẩm
-                </p>
+                </p> */}
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-8">
                 {filterAndSortItems(iceCreamItems, "ice-cream").map((item) => (
                   <Card
                     key={item.id}
-                    className="group hover:shadow-xl transition-all duration-300 border-0 bg-white/90 backdrop-blur-sm overflow-hidden"
+                    className="group hover:shadow-xl transition-all duration-300 border-0 bg-white/90 backdrop-blur-sm overflow-hidden flex flex-col h-full"
                   >
                     <div className="relative">
                       <div className="aspect-square bg-gradient-to-br from-cream-100 to-cream-200 overflow-hidden">
@@ -654,7 +652,7 @@ export default function MenuPage() {
                       </div>
                     </div>
 
-                    <CardHeader className="pb-2 lg:pb-3 p-3 lg:p-6">
+                    <CardHeader className="pb-2 lg:pb-3 p-3 lg:p-6 flex-grow-0">
                       <CardTitle className="text-base lg:text-xl font-bold text-navy-900 leading-tight">
                         {item.name}
                       </CardTitle>
@@ -663,17 +661,23 @@ export default function MenuPage() {
                       </p>
                     </CardHeader>
 
-                    <CardContent className="pt-0 p-3 lg:p-6 lg:pt-0">
+                    <CardContent className="pt-0 p-3 lg:p-6 lg:pt-0 flex flex-col flex-grow justify-between">
                       <div className="flex items-center justify-between mb-3 lg:mb-4">
                         <span className="text-base lg:text-xl font-bold text-gold-600">{item.price && formatPrice(item.price)}</span>
                       </div>
 
-                      <Button className="w-full bg-gradient-to-r from-gold-500 to-gold-400 hover:from-gold-600 hover:to-gold-500 text-navy-900 h-10 lg:h-auto text-sm lg:text-base">
+                      <Button className="w-full bg-gradient-to-r from-gold-500 to-gold-400 hover:from-gold-600 hover:to-gold-500 text-navy-900 h-10 lg:h-auto text-sm lg:text-base mt-auto">
                         Đặt Hàng Ngay
                       </Button>
                     </CardContent>
                   </Card>
                 ))}
+              </div>
+
+              <div className="text-center mt-6">
+                <p className="text-sm text-gray-500">
+                  Hiển thị {filterAndSortItems(iceCreamItems, "ice-cream").length} / {iceCreamItems.length} sản phẩm
+                </p>
               </div>
 
               {filterAndSortItems(iceCreamItems, "ice-cream").length === 0 && (
