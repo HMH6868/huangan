@@ -139,7 +139,7 @@ export default function RecruitmentPage() {
             {jobPositions.map((job, index) => (
               <Card
                 key={index}
-                className="group hover:shadow-2xl transition-all duration-500 border-0 bg-white/80 backdrop-blur-sm overflow-hidden"
+                className="group hover:shadow-2xl transition-all duration-500 border-0 bg-white/80 backdrop-blur-sm overflow-hidden shadow-lg hover:shadow-2xl"
               >
                 <CardHeader className="bg-gradient-to-r from-navy-50 to-gold-50 border-b border-gold-200">
                   <div className="flex justify-between items-start mb-3">

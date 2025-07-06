@@ -137,7 +137,7 @@ export default function HomePage() {
             {featuredProducts.map((product, index) => (
               <Card
                 key={index}
-                className="group hover:shadow-2xl transition-all duration-500 border-0 bg-white/80 backdrop-blur-sm overflow-hidden"
+                className="group hover:shadow-2xl transition-all duration-500 border-0 bg-white/80 backdrop-blur-sm overflow-hidden shadow-lg hover:shadow-2xl"
               >
                 <div className="relative">
                   <div className="aspect-square bg-gradient-to-br from-cream-100 to-cream-200 overflow-hidden">

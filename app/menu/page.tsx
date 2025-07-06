@@ -454,7 +454,7 @@ export default function MenuPage() {
                 {filterAndSortItems(milkTeaItems, "milk-tea").map((item) => (
                   <Card
                     key={item.id}
-                    className="group hover:shadow-xl transition-all duration-300 border-0 bg-white/90 backdrop-blur-sm overflow-hidden flex flex-col h-full"
+                    className="group hover:shadow-xl transition-all duration-300 border-0 bg-white/90 backdrop-blur-sm overflow-hidden flex flex-col h-full shadow-lg hover:shadow-2xl"
                   >
                     <div className="relative">
                       <div className="aspect-square bg-gradient-to-br from-cream-100 to-cream-200 overflow-hidden">
@@ -604,7 +604,7 @@ export default function MenuPage() {
                 {filterAndSortItems(iceCreamItems, "ice-cream").map((item) => (
                   <Card
                     key={item.id}
-                    className="group hover:shadow-xl transition-all duration-300 border-0 bg-white/90 backdrop-blur-sm overflow-hidden flex flex-col h-full"
+                    className="group hover:shadow-xl transition-all duration-300 border-0 bg-white/90 backdrop-blur-sm overflow-hidden flex flex-col h-full shadow-lg hover:shadow-2xl"
                   >
                     <div className="relative">
                       <div className="aspect-square bg-gradient-to-br from-cream-100 to-cream-200 overflow-hidden">
