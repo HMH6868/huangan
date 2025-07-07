@@ -7,9 +7,9 @@ export default function Footer() {
   return (
     <footer className="bg-navy-900 text-white">
       <div className="container mx-auto px-4 py-12">
-        <div className="grid md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           {/* Company Info */}
-          <div>
+          <div className="col-span-2 md:col-span-1">
             <div className="flex items-center space-x-2 mb-4">
               <Image src="/logo.png" alt={`${siteConfig.name} Logo`} width={40} height={40} className="rounded-full" />
               <span className="text-xl font-bold">{siteConfig.name}</span>
@@ -71,7 +71,7 @@ export default function Footer() {
           </div>
 
           {/* Contact */}
-          <div>
+          <div className="col-span-2 md:col-span-1">
             <h3 className="text-lg font-semibold mb-4 text-gold-400">Liên Hệ</h3>
             <div className="space-y-3 text-gray-300">
               <div className="flex items-center space-x-2">
