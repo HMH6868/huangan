@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Menu } from "lucide-react"
 import { siteConfig } from "@/config/site"
+import OrderPlatformsDialog from "@/components/ui/order-platforms-dialog"
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
@@ -58,12 +59,17 @@ export default function Navbar() {
 
           {/* Desktop Actions */}
           <div className="hidden lg:flex items-center space-x-4">
-            <Button
-              size="sm"
-              className="bg-gradient-to-r from-gold-500 to-gold-400 hover:from-gold-600 hover:to-gold-500 text-navy-900 shadow-lg hover:shadow-xl transition-all duration-300 px-6 font-semibold"
-            >
-              Đặt Hàng
-            </Button>
+            <OrderPlatformsDialog
+              productName="Đặt Hàng Nhanh"
+              trigger={
+                <Button
+                  size="sm"
+                  className="bg-gradient-to-r from-gold-500 to-gold-400 hover:from-gold-600 hover:to-gold-500 text-navy-900 shadow-lg hover:shadow-xl transition-all duration-300 px-6 font-semibold"
+                >
+                  Đặt Hàng
+                </Button>
+              }
+            />
           </div>
 
           {/* Mobile Menu */}
@@ -86,9 +92,14 @@ export default function Navbar() {
                   </Link>
                 ))}
                 <hr className="border-gold-200" />
-                <Button className="bg-gradient-to-r from-gold-500 to-gold-400 hover:from-gold-600 hover:to-gold-500 text-navy-900 shadow-lg font-semibold">
-                  Đặt Hàng Ngay
-                </Button>
+                <OrderPlatformsDialog
+                  productName="Đặt Hàng Nhanh"
+                  trigger={
+                    <Button className="bg-gradient-to-r from-gold-500 to-gold-400 hover:from-gold-600 hover:to-gold-500 text-navy-900 shadow-lg font-semibold">
+                      Đặt Hàng Ngay
+                    </Button>
+                  }
+                />
               </div>
             </SheetContent>
           </Sheet>

@@ -4,6 +4,7 @@ import { Star, MapPin, Phone, Award, Heart, Sparkles } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 import { siteConfig } from "@/config/site"
+import OrderPlatformsDialog from "@/components/ui/order-platforms-dialog"
 
 export default function HomePage() {
   const featuredProducts = [
@@ -55,37 +56,75 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-cream-50 to-white">
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-navy-900 via-navy-800 to-navy-700">
-        <div className="absolute inset-0 bg-black/20"></div>
-        <div className="absolute inset-0 bg-gradient-to-r from-navy-900/50 to-transparent"></div>
+      <section className="relative overflow-hidden bg-gradient-to-br from-navy-900 via-navy-800 to-navy-700 h-screen flex items-center">
+        {/* Decorative bubbles background */}
+        <div className="absolute inset-0 overflow-hidden">
+          {[...Array(20)].map((_, i) => (
+            <div
+              key={i}
+              className="bubble absolute rounded-full bg-white/10 backdrop-blur-sm animate-float"
+              style={{
+                width: `${Math.random() * 6 + 1}rem`,
+                height: `${Math.random() * 6 + 1}rem`,
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animationDelay: `${Math.random() * 10}s`,
+                animationDuration: `${Math.random() * 10 + 10}s`,
+                opacity: Math.random() * 0.5 + 0.2
+              }}
+            />
+          ))}
+        </div>
 
-        <div className="relative container mx-auto px-4 py-24 lg:py-32">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="text-white space-y-8">
-              <div className="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20">
-                <Sparkles className="w-4 h-4 mr-2 text-gold-400" />
-                <span className="text-sm font-medium">Trải nghiệm đẳng cấp</span>
+        {/* Overlay gradients */}
+        <div className="absolute inset-0 bg-black/30"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-navy-900/60 to-transparent"></div>
+        
+        {/* Tea leaf decoration */}
+        <div className="absolute top-0 right-0 w-1/3 h-1/3 opacity-20">
+          <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+            <path d="M100 0C150 50 150 150 100 200C50 150 50 50 100 0Z" fill="currentColor" className="text-gold-300" />
+          </svg>
+        </div>
+        
+        <div className="absolute bottom-0 left-0 w-1/4 h-1/4 opacity-20">
+          <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+            <path d="M100 0C150 50 150 150 100 200C50 150 50 50 100 0Z" fill="currentColor" className="text-gold-300" />
+          </svg>
+        </div>
+
+        <div className="relative container mx-auto px-4 w-full">
+          <div className="grid lg:grid-cols-5 gap-8 items-center">
+            <div className="lg:col-span-3 text-white space-y-8 text-center lg:text-left">
+              <div className="flex justify-center lg:justify-start">
+                <div className="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 animate-pulse">
+                  <Sparkles className="w-4 h-4 mr-2 text-gold-400" />
+                  <span className="text-sm font-medium">Trải nghiệm đẳng cấp</span>
+                </div>
               </div>
 
               <div className="space-y-6">
-                <h1 className="text-5xl lg:text-7xl font-bold leading-tight">
+                <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold leading-tight drop-shadow-lg">
                   Nghệ Thuật
-                  <span className="block text-transparent bg-gradient-to-r from-gold-400 to-gold-300 bg-clip-text pb-2 pt-2">
+                  <span className="block text-transparent bg-gradient-to-r from-gold-400 via-gold-300 to-gold-400 bg-clip-text pb-2 pt-2">
                     Trà Sữa
                   </span>
                 </h1>
-                <p className="text-xl lg:text-2xl text-navy-100 leading-relaxed max-w-lg">
+                <p className="text-lg sm:text-xl lg:text-2xl text-navy-100 leading-relaxed max-w-xl mx-auto lg:mx-0">
                   Khám phá hương vị tinh tế từ những ly trà sữa được pha chế thủ công với tình yêu và sự tỉ mỉ
                 </p>
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-4">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 <Button
                   asChild
                   size="lg"
-                  className="bg-gradient-to-r from-gold-500 to-gold-400 hover:from-gold-600 hover:to-gold-500 text-navy-900 border-0 shadow-xl hover:shadow-2xl transition-all duration-300 px-8 py-6 text-lg font-semibold"
+                  className="bg-gradient-to-r from-gold-500 to-gold-400 hover:from-gold-600 hover:to-gold-500 text-navy-900 border-0 shadow-xl hover:shadow-2xl transition-all duration-300 px-8 py-6 text-lg font-semibold group"
                 >
-                  <Link href="/menu">Khám Phá Thực Đơn</Link>
+                  <Link href="/menu" className="flex items-center">
+                    <span>Khám Phá Menu</span>
+                    <span className="ml-2 group-hover:translate-x-1 transition-transform">→</span>
+                  </Link>
                 </Button>
                 <Button
                   asChild
@@ -98,16 +137,40 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-gold-400/20 to-navy-400/20 rounded-3xl blur-3xl"></div>
-              <div className="relative bg-white/10 backdrop-blur-sm rounded-3xl p-8 border border-white/20">
-                <Image
-                  src="/logo.webp"
-                  alt={`${siteConfig.name} Premium`}
-                  width={200}
-                  height={200}
-                  className="mx-auto rounded-full shadow-2xl"
-                />
+            <div className="lg:col-span-2 relative hidden lg:block">
+              <div className="absolute -inset-4 bg-gradient-to-br from-gold-400/20 via-white/10 to-navy-400/20 rounded-full blur-3xl animate-pulse"></div>
+              <div className="relative z-10">
+                <div className="relative">
+                  {/* Cup outline decoration */}
+                  <div className="absolute -inset-8 border-2 border-gold-300/30 rounded-3xl -rotate-6"></div>
+                  <div className="absolute -inset-8 border-2 border-gold-300/20 rounded-3xl rotate-3 animate-pulse"></div>
+                  
+                  <div className="relative bg-white/10 backdrop-blur-md rounded-3xl p-8 border border-white/20 shadow-2xl overflow-hidden">
+                    {/* Bubble tea straw decoration */}
+                    <div className="absolute -right-10 -bottom-10 w-32 h-32 bg-gold-400/20 rounded-full blur-xl"></div>
+                    
+                    <Image
+                      src="/logo.webp"
+                      alt={`${siteConfig.name} Premium`}
+                      width={300}
+                      height={300}
+                      className="mx-auto rounded-full shadow-2xl hover:scale-105 transition-all duration-500"
+                    />
+                    
+                    {/* Decorative pearls */}
+                    <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 flex items-center justify-center gap-2">
+                      {[...Array(5)].map((_, i) => (
+                        <div 
+                          key={i}
+                          className="w-3 h-3 rounded-full bg-gradient-to-br from-gold-400 to-gold-600"
+                          style={{
+                            transform: `translateY(${Math.sin(i) * 5}px)`
+                          }}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -184,9 +247,14 @@ export default function HomePage() {
                       )}
                     </div>
                   </div>
-                  <Button className="w-full bg-gradient-to-r from-navy-600 to-navy-700 hover:from-navy-700 hover:to-navy-800 text-white shadow-lg hover:shadow-xl transition-all duration-300">
-                    Xem Chi Tiết
-                  </Button>
+                  <OrderPlatformsDialog
+                    productName={product.name}
+                    trigger={
+                      <Button className="w-full bg-gradient-to-r from-navy-600 to-navy-700 hover:from-navy-700 hover:to-navy-800 text-white shadow-lg hover:shadow-xl transition-all duration-300">
+                        Xem Chi Tiết
+                      </Button>
+                    }
+                  />
                 </CardContent>
               </Card>
             ))}
@@ -238,13 +306,17 @@ export default function HomePage() {
               Đặt hàng ngay hôm nay và cảm nhận sự khác biệt từ những ly trà sữa được chế tác tỉ mỉ
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button
-                asChild
-                size="lg"
-                className="bg-gradient-to-r from-gold-500 to-gold-400 hover:from-gold-600 hover:to-gold-500 text-navy-900 border-0 shadow-xl hover:shadow-2xl transition-all duration-300 px-8 py-6 text-lg font-semibold"
-              >
-                <Link href="/menu">Đặt Hàng Ngay</Link>
-              </Button>
+              <OrderPlatformsDialog
+                productName="Đặt Hàng Từ Menu"
+                trigger={
+                  <Button
+                    size="lg"
+                    className="bg-gradient-to-r from-gold-500 to-gold-400 hover:from-gold-600 hover:to-gold-500 text-navy-900 border-0 shadow-xl hover:shadow-2xl transition-all duration-300 px-8 py-6 text-lg font-semibold"
+                  >
+                    Đặt Hàng Ngay
+                  </Button>
+                }
+              />
               <div className="flex items-center justify-center gap-6 text-white">
                 <div className="flex items-center gap-2">
                   <Phone className="w-5 h-5 text-gold-400" />

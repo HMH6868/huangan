@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Slider } from "@/components/ui/slider"
+import OrderPlatformsDialog from "@/components/ui/order-platforms-dialog"
 
 type MenuItem = {
   id: string;
@@ -563,9 +564,15 @@ export default function MenuPage() {
                       </div>
 
                       {/* Order Button */}
-                      <Button className="w-full bg-gradient-to-r from-navy-600 to-navy-700 hover:from-navy-700 hover:to-navy-800 text-white h-10 lg:h-auto text-sm lg:text-base mt-auto">
-                        Đặt Hàng Ngay
-                      </Button>
+                      <OrderPlatformsDialog
+                        productName={item.name}
+                        productSize={getSelectedSize(item.id)}
+                        trigger={
+                          <Button className="w-full bg-gradient-to-r from-navy-600 to-navy-700 hover:from-navy-700 hover:to-navy-800 text-white h-10 lg:h-auto text-sm lg:text-base mt-auto">
+                            Đặt Hàng Ngay
+                          </Button>
+                        }
+                      />
                     </CardContent>
                   </Card>
                 ))}
@@ -690,9 +697,14 @@ export default function MenuPage() {
                         <span className="text-base lg:text-xl font-bold text-gold-600">{item.price && formatPrice(item.price)}</span>
                       </div>
 
-                      <Button className="w-full bg-gradient-to-r from-gold-500 to-gold-400 hover:from-gold-600 hover:to-gold-500 text-navy-900 h-10 lg:h-auto text-sm lg:text-base mt-auto">
-                        Đặt Hàng Ngay
-                      </Button>
+                      <OrderPlatformsDialog
+                        productName={item.name}
+                        trigger={
+                          <Button className="w-full bg-gradient-to-r from-gold-500 to-gold-400 hover:from-gold-600 hover:to-gold-500 text-navy-900 h-10 lg:h-auto text-sm lg:text-base mt-auto">
+                            Đặt Hàng Ngay
+                          </Button>
+                        }
+                      />
                     </CardContent>
                   </Card>
                 ))}
