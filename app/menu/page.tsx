@@ -188,7 +188,23 @@ export default function MenuPage() {
   }
 
   const getSelectedSize = (itemId: string) => {
-    return selectedSizes[itemId] || "S" // Default size
+    if (selectedSizes[itemId]) {
+      return selectedSizes[itemId]
+    }
+    
+    // Find the first size with non-zero price
+    const item = menuItems.find(item => item.id === itemId)
+    if (item?.prices) {
+      const availableSizes = Object.entries(item.prices)
+        .filter(([_, price]) => price !== 0)
+        .map(([size]) => size)
+      
+      if (availableSizes.length > 0) {
+        return availableSizes[0]
+      }
+    }
+    
+    return "S" // Fallback to S if no sizes with prices are found
   }
 
   const setSelectedSize = (itemId: string, size: string) => {
@@ -514,28 +530,36 @@ export default function MenuPage() {
                             {item.prices && formatPrice(item.prices[getSelectedSize(item.id) as keyof typeof item.prices] as number)}
                           </span>
                         </div>
-                        {item.prices && (
-                          <div className="grid grid-cols-3 gap-1 lg:gap-2">
-                            {Object.entries(item.prices).map(([size, price]) => (
-                              <Button
-                                key={size}
-                                variant={getSelectedSize(item.id) === size ? "default" : "outline"}
-                                size="sm"
-                                className={`h-auto py-2 lg:py-3 ${
-                                  getSelectedSize(item.id) === size
-                                    ? "bg-navy-600 text-white hover:bg-navy-700"
-                                    : "border-navy-200 text-navy-700 hover:bg-navy-50"
-                                }`}
-                                onClick={() => setSelectedSize(item.id, size)}
-                              >
-                                <div className="text-center">
-                                  <div className="font-semibold text-xs lg:text-sm">{size}</div>
-                                  <div className="text-xs">{formatPrice(price as number)}</div>
-                                </div>
-                              </Button>
-                            ))}
-                          </div>
-                        )}
+                        {item.prices && (() => {
+                          const availableSizes = Object.entries(item.prices).filter(([_, price]) => price !== 0);
+                          const gridColsClass = 
+                            availableSizes.length === 1 ? 'grid-cols-1' : 
+                            availableSizes.length === 2 ? 'grid-cols-2' : 
+                            'grid-cols-3';
+                          
+                          return (
+                            <div className={`grid gap-1 lg:gap-2 ${gridColsClass}`}>
+                              {availableSizes.map(([size, price]) => (
+                                <Button
+                                  key={size}
+                                  variant={getSelectedSize(item.id) === size ? "default" : "outline"}
+                                  size="sm"
+                                  className={`h-auto py-2 lg:py-3 ${
+                                    getSelectedSize(item.id) === size
+                                      ? "bg-navy-600 text-white hover:bg-navy-700"
+                                      : "border-navy-200 text-navy-700 hover:bg-navy-50"
+                                  }`}
+                                  onClick={() => setSelectedSize(item.id, size)}
+                                >
+                                  <div className="text-center">
+                                    <div className="font-semibold text-xs lg:text-sm">{size}</div>
+                                    <div className="text-xs">{formatPrice(price as number)}</div>
+                                  </div>
+                                </Button>
+                              ))}
+                            </div>
+                          );
+                        })()}
                       </div>
 
                       {/* Order Button */}
