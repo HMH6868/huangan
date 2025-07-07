@@ -92,18 +92,18 @@ export default function OrderPlatformsDialog({
         )}
       </DialogTrigger>
       <DialogContent className="sm:max-w-lg bg-gradient-to-br from-cream-50 to-white shadow-2xl rounded-2xl p-0 overflow-hidden">
-        <DialogHeader className="pt-6 pb-2 px-6">
-          <DialogTitle className="text-2xl font-bold text-center text-navy-900 flex items-center justify-center gap-2">
-            <Sparkles className="w-6 h-6 text-gold-500" />
+        <DialogHeader className="pt-6 pb-2 px-4 sm:px-6">
+          <DialogTitle className="text-xl sm:text-2xl font-bold text-center text-navy-900 flex items-center justify-center gap-2">
+            <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-gold-500" />
             Chọn Nền Tảng Đặt Hàng
           </DialogTitle>
-          <DialogDescription className="text-center pt-2 font-semibold text-navy-700 bg-navy-50 border border-navy-100 rounded-lg px-3 py-1.5 mt-2">
+          <DialogDescription className="text-center pt-2 font-semibold text-navy-700 bg-navy-50 border border-navy-100 rounded-lg px-3 py-1.5 mt-2 text-sm sm:text-base">
             {productName}
             {productSize && <span className="font-normal text-gray-600 ml-1">- Size {productSize}</span>}
           </DialogDescription>
         </DialogHeader>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 p-6 pt-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 p-4 sm:p-6 pt-4">
           {platforms.map((platform) => (
             <div key={platform.id} className="relative group">
               <div
@@ -111,9 +111,9 @@ export default function OrderPlatformsDialog({
               />
               <Button
                 onClick={() => handlePlatformSelect(platform)}
-                className={`relative w-full h-36 p-4 flex flex-col items-center justify-center gap-3 ${platform.color} ${platform.textColor} rounded-xl transition-all duration-300 shadow-lg hover:shadow-2xl transform hover:-translate-y-1`}
+                className={`relative w-full h-28 sm:h-36 p-4 flex flex-col items-center justify-center gap-2 sm:gap-3 ${platform.color} ${platform.textColor} rounded-xl transition-all duration-300 shadow-lg hover:shadow-2xl transform hover:-translate-y-1`}
               >
-                <div className="w-16 h-16 bg-white/95 group-hover:bg-white rounded-full flex items-center justify-center p-2.5 shadow-inner backdrop-blur-sm transition-colors duration-300">
+                <div className="w-14 h-14 sm:w-16 sm:h-16 bg-white/95 group-hover:bg-white rounded-full flex items-center justify-center p-2 sm:p-2.5 shadow-inner backdrop-blur-sm transition-colors duration-300">
                   <Image
                     src={platform.logo}
                     alt={platform.name}
@@ -123,7 +123,7 @@ export default function OrderPlatformsDialog({
                   />
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <span className="font-semibold tracking-wide">{platform.name}</span>
+                  <span className="font-semibold tracking-wide text-sm sm:text-base">{platform.name}</span>
                   <ExternalLink className="w-4 h-4" />
                 </div>
               </Button>
@@ -131,7 +131,7 @@ export default function OrderPlatformsDialog({
           ))}
         </div>
 
-        <div className="text-xs text-center text-navy-700/80 py-3 bg-gradient-to-t from-cream-100 to-transparent">
+        <div className="text-xs text-center text-navy-700/80 py-2 sm:py-3 bg-gradient-to-t from-cream-100 to-transparent">
           Bạn sẽ được chuyển đến trang đặt hàng của đối tác
         </div>
       </DialogContent>
