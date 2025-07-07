@@ -92,32 +92,37 @@ export default function MenuPage() {
   // Extract unique badges and flavors from API data
   const badges = Array.from(new Set(menuItems.map(item => item.badge).filter(Boolean)))
 
-  const milkTeaFlavors = [
-    { id: "classic", name: "Trà Cổ Điển" },
-    { id: "matcha", name: "Matcha" },
-    { id: "tea", name: "Trà Đặc Biệt" },
-    { id: "taro", name: "Taro" },
-    { id: "chocolate", name: "Chocolate" },
-    { id: "fruit", name: "Trái Cây" },
-    { id: "vanilla", name: "Vanilla" },
-    { id: "caramel", name: "Caramel" },
-    { id: "cheese", name: "Phô Mai" },
-    { id: "brown-sugar", name: "Đường Nâu" },
-  ]
+  const flavorTranslations: { [key: string]: string } = {
+    // Milk Tea
+    "classic": "Trà Cổ Điển",
+    "matcha": "Matcha",
+    "tea": "Trà Đặc Biệt",
+    "taro": "Taro",
+    "chocolate": "Chocolate",
+    "fruit": "Trái Cây",
+    "vanilla": "Vanilla",
+    "caramel": "Caramel",
+    "cheese": "Phô Mai",
+    "brown-sugar": "Đường Nâu",
+    // Ice Cream
+    "cookies": "Cookies",
+    "coconut": "Dừa",
+    "coffee": "Cà Phê",
+    "rum": "Rum",
+    "sesame": "Mè Đen",
+  }
 
-  const iceCreamFlavors = [
-    { id: "vanilla", name: "Vanilla" },
-    { id: "chocolate", name: "Chocolate" },
-    { id: "fruit", name: "Trái Cây" },
-    { id: "matcha", name: "Matcha" },
-    { id: "taro", name: "Taro" },
-    { id: "cookies", name: "Cookies" },
-    { id: "caramel", name: "Caramel" },
-    { id: "coconut", name: "Dừa" },
-    { id: "coffee", name: "Cà Phê" },
-    { id: "rum", name: "Rum" },
-    { id: "sesame", name: "Mè Đen" },
-  ]
+  // Generate dynamic flavor lists from API data
+  const getUniqueFlavors = (items: MenuItem[]) => {
+    const flavors = Array.from(new Set(items.map(item => item.flavor).filter(Boolean)))
+    return flavors.map(flavorId => ({
+      id: flavorId,
+      name: flavorTranslations[flavorId] || flavorId.charAt(0).toUpperCase() + flavorId.slice(1).replace(/-/g, ' '),
+    }))
+  }
+
+  const milkTeaFlavors = getUniqueFlavors(milkTeaItems)
+  const iceCreamFlavors = getUniqueFlavors(iceCreamItems)
 
   const formatPrice = (price: number) => {
     return price.toLocaleString("vi-VN") + "đ"
@@ -471,7 +476,7 @@ export default function MenuPage() {
                 {filterAndSortItems(milkTeaItems, "milk-tea").map((item) => (
                   <Card
                     key={item.id}
-                    className="group hover:shadow-xl transition-all duration-300 border-0 bg-white/90 backdrop-blur-sm overflow-hidden flex flex-col h-full shadow-lg hover:shadow-2xl"
+                    className={`group hover:shadow-xl transition-all duration-300 border-0 bg-white/90 backdrop-blur-sm overflow-hidden flex flex-col h-full shadow-lg hover:shadow-2xl ${!item.available ? "grayscale" : ""}`}
                   >
                     <div className="relative">
                       <div className="aspect-square bg-gradient-to-br from-cream-100 to-cream-200 overflow-hidden">
@@ -505,6 +510,13 @@ export default function MenuPage() {
                           </Badge>
                         )}
                       </div>
+                      {!item.available && (
+                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                          <Badge className="bg-white text-navy-900 text-sm font-semibold px-3 py-1.5 shadow-md">
+                            Hết hàng
+                          </Badge>
+                        </div>
+                      )}
                       <div className="absolute top-2 lg:top-3 right-2 lg:right-3 bg-white/90 backdrop-blur-sm rounded-full px-2 py-1">
                         <div className="flex items-center gap-1">
                           <Star className="w-3 h-3 fill-gold-400 text-gold-400" />
@@ -523,56 +535,64 @@ export default function MenuPage() {
                     </CardHeader>
 
                     <CardContent className="pt-0 p-3 lg:p-6 lg:pt-0 flex flex-col flex-grow justify-between">
-                      {/* Size Selection */}
-                      <div className="mb-3 lg:mb-4">
-                        <div className="flex justify-between items-center mb-2">
-                          <span className="text-xs lg:text-sm font-medium text-gray-700">Size:</span>
-                          <span className="text-base lg:text-lg font-bold text-gold-600">
-                            {item.prices && formatPrice(item.prices[getSelectedSize(item.id) as keyof typeof item.prices] as number)}
-                          </span>
-                        </div>
-                        {item.prices && (() => {
-                          const availableSizes = Object.entries(item.prices).filter(([_, price]) => price !== 0);
-                          const gridColsClass = 
-                            availableSizes.length === 1 ? 'grid-cols-1' : 
-                            availableSizes.length === 2 ? 'grid-cols-2' : 
-                            'grid-cols-3';
-                          
-                          return (
-                            <div className={`grid gap-1 lg:gap-2 ${gridColsClass}`}>
-                              {availableSizes.map(([size, price]) => (
-                                <Button
-                                  key={size}
-                                  variant={getSelectedSize(item.id) === size ? "default" : "outline"}
-                                  size="sm"
-                                  className={`h-auto py-2 lg:py-3 ${
-                                    getSelectedSize(item.id) === size
-                                      ? "bg-navy-600 text-white hover:bg-navy-700"
-                                      : "border-navy-200 text-navy-700 hover:bg-navy-50"
-                                  }`}
-                                  onClick={() => setSelectedSize(item.id, size)}
-                                >
-                                  <div className="text-center">
-                                    <div className="font-semibold text-xs lg:text-sm">{size}</div>
-                                    <div className="text-xs">{formatPrice(price as number)}</div>
-                                  </div>
-                                </Button>
-                              ))}
+                      {item.available ? (
+                        <>
+                          {/* Size Selection */}
+                          <div className="mb-3 lg:mb-4">
+                            <div className="flex justify-between items-center mb-2">
+                              <span className="text-xs lg:text-sm font-medium text-gray-700">Size:</span>
+                              <span className="text-base lg:text-lg font-bold text-gold-600">
+                                {item.prices && formatPrice(item.prices[getSelectedSize(item.id) as keyof typeof item.prices] as number)}
+                              </span>
                             </div>
-                          );
-                        })()}
-                      </div>
+                            {item.prices && (() => {
+                              const availableSizes = Object.entries(item.prices).filter(([_, price]) => price !== 0);
+                              const gridColsClass = 
+                                availableSizes.length === 1 ? 'grid-cols-1' : 
+                                availableSizes.length === 2 ? 'grid-cols-2' : 
+                                'grid-cols-3';
+                              
+                              return (
+                                <div className={`grid gap-1 lg:gap-2 ${gridColsClass}`}>
+                                  {availableSizes.map(([size, price]) => (
+                                    <Button
+                                      key={size}
+                                      variant={getSelectedSize(item.id) === size ? "default" : "outline"}
+                                      size="sm"
+                                      className={`h-auto py-2 lg:py-3 ${
+                                        getSelectedSize(item.id) === size
+                                          ? "bg-navy-600 text-white hover:bg-navy-700"
+                                          : "border-navy-200 text-navy-700 hover:bg-navy-50"
+                                      }`}
+                                      onClick={() => setSelectedSize(item.id, size)}
+                                    >
+                                      <div className="text-center">
+                                        <div className="font-semibold text-xs lg:text-sm">{size}</div>
+                                        <div className="text-xs">{formatPrice(price as number)}</div>
+                                      </div>
+                                    </Button>
+                                  ))}
+                                </div>
+                              );
+                            })()}
+                          </div>
 
-                      {/* Order Button */}
-                      <OrderPlatformsDialog
-                        productName={item.name}
-                        productSize={getSelectedSize(item.id)}
-                        trigger={
-                          <Button className="w-full bg-gradient-to-r from-navy-600 to-navy-700 hover:from-navy-700 hover:to-navy-800 text-white h-10 lg:h-auto text-sm lg:text-base mt-auto">
-                            Đặt Hàng Ngay
-                          </Button>
-                        }
-                      />
+                          {/* Order Button */}
+                          <OrderPlatformsDialog
+                            productName={item.name}
+                            productSize={getSelectedSize(item.id)}
+                            trigger={
+                              <Button className="w-full bg-gradient-to-r from-navy-600 to-navy-700 hover:from-navy-700 hover:to-navy-800 text-white h-10 lg:h-auto text-sm lg:text-base mt-auto">
+                                Đặt Hàng Ngay
+                              </Button>
+                            }
+                          />
+                        </>
+                      ) : (
+                        <Button disabled className="w-full bg-gray-300 text-gray-500 h-10 lg:h-auto text-sm lg:text-base mt-auto cursor-not-allowed">
+                          Tạm ngưng sản phẩm
+                        </Button>
+                      )}
                     </CardContent>
                   </Card>
                 ))}
@@ -635,7 +655,7 @@ export default function MenuPage() {
                 {filterAndSortItems(iceCreamItems, "ice-cream").map((item) => (
                   <Card
                     key={item.id}
-                    className="group hover:shadow-xl transition-all duration-300 border-0 bg-white/90 backdrop-blur-sm overflow-hidden flex flex-col h-full shadow-lg hover:shadow-2xl"
+                    className={`group hover:shadow-xl transition-all duration-300 border-0 bg-white/90 backdrop-blur-sm overflow-hidden flex flex-col h-full shadow-lg hover:shadow-2xl ${!item.available ? "grayscale" : ""}`}
                   >
                     <div className="relative">
                       <div className="aspect-square bg-gradient-to-br from-cream-100 to-cream-200 overflow-hidden">
@@ -675,6 +695,13 @@ export default function MenuPage() {
                           </Badge>
                         )}
                       </div>
+                      {!item.available && (
+                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                          <Badge className="bg-white text-navy-900 text-sm font-semibold px-3 py-1.5 shadow-md">
+                            Hết hàng
+                          </Badge>
+                        </div>
+                      )}
                       <div className="absolute top-2 lg:top-3 right-2 lg:right-3 bg-white/90 backdrop-blur-sm rounded-full px-2 py-1">
                         <div className="flex items-center gap-1">
                           <Star className="w-3 h-3 fill-gold-400 text-gold-400" />
@@ -693,18 +720,26 @@ export default function MenuPage() {
                     </CardHeader>
 
                     <CardContent className="pt-0 p-3 lg:p-6 lg:pt-0 flex flex-col flex-grow justify-between">
-                      <div className="flex items-center justify-between mb-3 lg:mb-4">
-                        <span className="text-base lg:text-xl font-bold text-gold-600">{item.price && formatPrice(item.price)}</span>
-                      </div>
+                      {item.available ? (
+                        <>
+                          <div className="flex items-center justify-between mb-3 lg:mb-4">
+                            <span className="text-base lg:text-xl font-bold text-gold-600">{item.price && formatPrice(item.price)}</span>
+                          </div>
 
-                      <OrderPlatformsDialog
-                        productName={item.name}
-                        trigger={
-                          <Button className="w-full bg-gradient-to-r from-gold-500 to-gold-400 hover:from-gold-600 hover:to-gold-500 text-navy-900 h-10 lg:h-auto text-sm lg:text-base mt-auto">
-                            Đặt Hàng Ngay
-                          </Button>
-                        }
-                      />
+                          <OrderPlatformsDialog
+                            productName={item.name}
+                            trigger={
+                              <Button className="w-full bg-gradient-to-r from-gold-500 to-gold-400 hover:from-gold-600 hover:to-gold-500 text-navy-900 h-10 lg:h-auto text-sm lg:text-base mt-auto">
+                                Đặt Hàng Ngay
+                              </Button>
+                            }
+                          />
+                        </>
+                      ) : (
+                        <Button disabled className="w-full bg-gray-300 text-gray-500 h-10 lg:h-auto text-sm lg:text-base mt-auto cursor-not-allowed">
+                          Tạm ngưng sản phẩm
+                        </Button>
+                      )}
                     </CardContent>
                   </Card>
                 ))}

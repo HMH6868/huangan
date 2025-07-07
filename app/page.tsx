@@ -94,23 +94,23 @@ export default function HomePage() {
         </div>
 
         <div className="relative container mx-auto px-4 w-full">
-          <div className="grid lg:grid-cols-5 gap-8 items-center">
-            <div className="lg:col-span-3 text-white space-y-8 text-center lg:text-left">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div className="text-white space-y-8 text-center lg:text-left">
               <div className="flex justify-center lg:justify-start">
                 <div className="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 animate-pulse">
-                  <Sparkles className="w-4 h-4 mr-2 text-gold-400" />
+                  <Sparkles className="w-5 h-5 mr-2 text-gold-400" />
                   <span className="text-sm font-medium">Trải nghiệm đẳng cấp</span>
                 </div>
               </div>
 
               <div className="space-y-6">
-                <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold leading-tight drop-shadow-lg">
+                <h1 className="text-6xl sm:text-7xl lg:text-8xl font-bold leading-tight drop-shadow-lg">
                   Nghệ Thuật
                   <span className="block text-transparent bg-gradient-to-r from-gold-400 via-gold-300 to-gold-400 bg-clip-text pb-2 pt-2">
                     Trà Sữa
                   </span>
                 </h1>
-                <p className="text-lg sm:text-xl lg:text-2xl text-navy-100 leading-relaxed max-w-xl mx-auto lg:mx-0">
+                <p className="text-xl sm:text-2xl lg:text-2xl text-navy-100 leading-relaxed max-w-2xl mx-auto lg:mx-0">
                   Khám phá hương vị tinh tế từ những ly trà sữa được pha chế thủ công với tình yêu và sự tỉ mỉ
                 </p>
               </div>
@@ -119,7 +119,7 @@ export default function HomePage() {
                 <Button
                   asChild
                   size="lg"
-                  className="bg-gradient-to-r from-gold-500 to-gold-400 hover:from-gold-600 hover:to-gold-500 text-navy-900 border-0 shadow-xl hover:shadow-2xl transition-all duration-300 px-8 py-6 text-lg font-semibold group"
+                  className="bg-gradient-to-r from-gold-500 to-gold-400 hover:from-gold-600 hover:to-gold-500 text-navy-900 border-0 shadow-xl hover:shadow-2xl transition-all duration-300 px-10 py-7 text-lg font-semibold group"
                 >
                   <Link href="/menu" className="flex items-center">
                     <span>Khám Phá Menu</span>
@@ -130,20 +130,20 @@ export default function HomePage() {
                   asChild
                   variant="outline"
                   size="lg"
-                  className="border-2 border-white/30 text-white hover:bg-white/10 backdrop-blur-sm bg-white/5 px-8 py-6 text-lg font-semibold"
+                  className="border-2 border-white/30 text-white hover:bg-white/10 backdrop-blur-sm bg-white/5 px-10 py-7 text-lg font-semibold"
                 >
                   <Link href="/stores">Tìm Cửa Hàng</Link>
                 </Button>
               </div>
             </div>
 
-            <div className="lg:col-span-2 relative hidden lg:block">
-              <div className="absolute -inset-4 bg-gradient-to-br from-gold-400/20 via-white/10 to-navy-400/20 rounded-full blur-3xl animate-pulse"></div>
+            <div className="relative hidden lg:block">
+              <div className="absolute -inset-8 bg-gradient-to-br from-gold-400/20 via-white/10 to-navy-400/20 rounded-full blur-3xl animate-pulse"></div>
               <div className="relative z-10">
-                <div className="relative">
+                <div className="relative group">
                   {/* Cup outline decoration */}
-                  <div className="absolute -inset-8 border-2 border-gold-300/30 rounded-3xl -rotate-6"></div>
-                  <div className="absolute -inset-8 border-2 border-gold-300/20 rounded-3xl rotate-3 animate-pulse"></div>
+                  <div className="absolute -inset-8 border-2 border-gold-300/30 rounded-3xl -rotate-6 transition-transform duration-500 group-hover:rotate-0"></div>
+                  <div className="absolute -inset-8 border-2 border-gold-300/20 rounded-3xl rotate-3 transition-transform duration-500 group-hover:rotate-0 animate-pulse"></div>
                   
                   <div className="relative bg-white/10 backdrop-blur-md rounded-3xl p-8 border border-white/20 shadow-2xl overflow-hidden">
                     {/* Bubble tea straw decoration */}
@@ -152,9 +152,9 @@ export default function HomePage() {
                     <Image
                       src="/logo.webp"
                       alt={`${siteConfig.name} Premium`}
-                      width={300}
-                      height={300}
-                      className="mx-auto rounded-full shadow-2xl hover:scale-105 transition-all duration-500"
+                      width={400}
+                      height={400}
+                      className="mx-auto rounded-full shadow-2xl group-hover:scale-105 transition-all duration-500"
                     />
                     
                     {/* Decorative pearls */}

@@ -91,15 +91,13 @@ export default function OrderPlatformsDialog({
           </Button>
         )}
       </DialogTrigger>
-      <DialogContent className="sm:max-w-lg bg-gradient-to-br from-cream-50 to-white border-2 border-gold-200 shadow-2xl rounded-2xl p-0 overflow-hidden">
-        <div className="w-full h-2 bg-gradient-to-r from-gold-400 to-gold-500"></div>
-
+      <DialogContent className="sm:max-w-lg bg-gradient-to-br from-cream-50 to-white shadow-2xl rounded-2xl p-0 overflow-hidden">
         <DialogHeader className="pt-6 pb-2 px-6">
           <DialogTitle className="text-2xl font-bold text-center text-navy-900 flex items-center justify-center gap-2">
             <Sparkles className="w-6 h-6 text-gold-500" />
             Chọn Nền Tảng Đặt Hàng
           </DialogTitle>
-          <DialogDescription className="text-center pt-2 font-semibold text-gold-700 bg-gold-50 border border-gold-100 rounded-lg px-3 py-1.5 mt-2">
+          <DialogDescription className="text-center pt-2 font-semibold text-navy-700 bg-navy-50 border border-navy-100 rounded-lg px-3 py-1.5 mt-2">
             {productName}
             {productSize && <span className="font-normal text-gray-600 ml-1">- Size {productSize}</span>}
           </DialogDescription>
