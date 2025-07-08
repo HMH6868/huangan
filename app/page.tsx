@@ -56,7 +56,7 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-cream-50 to-white">
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-navy-900 via-navy-800 to-navy-700 h-screen flex items-center">
+      <section className="relative overflow-hidden bg-gradient-to-br from-navy-700 via-navy-600 to-navy-500 h-screen flex items-center">
         {/* Decorative bubbles background */}
         <div className="absolute inset-0 overflow-hidden">
           {[...Array(20)].map((_, i) => (
