@@ -1,6 +1,5 @@
 "use client"
-
-import React from "react";
+import React from "react"
 import {
   Dialog,
   DialogContent,
@@ -8,24 +7,25 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
-import { ExternalLink, Sparkles } from "lucide-react";
+} from "@/components/ui/dialog"
+import { Button } from "@/components/ui/button"
+import Image from "next/image"
+import { ExternalLink, Sparkles, ShoppingBag } from "lucide-react"
 
 export type OrderPlatform = {
-  id: string;
-  name: string;
-  logo: string;
-  url: string;
-  color: string;
-  textColor: string;
-};
+  id: string
+  name: string
+  logo: string
+  url: string
+  color: string
+  textColor: string
+  description: string
+}
 
 interface OrderPlatformsDialogProps {
-  trigger?: React.ReactNode;
-  productName: string;
-  productSize?: string;
+  trigger?: React.ReactNode
+  productName: string
+  productSize?: string
 }
 
 const defaultPlatforms: OrderPlatform[] = [
@@ -34,107 +34,140 @@ const defaultPlatforms: OrderPlatform[] = [
     name: "Shopee Food",
     logo: "/shopeefood.webp",
     url: "https://shopeefood.vn",
-    color: "bg-gradient-to-r from-orange-500 to-orange-600",
-    textColor: "text-white",
+    color: "from-gold-400 via-gold-500 to-gold-600",
+    textColor: "text-navy-900",
+    description: "Giao hàng nhanh chóng",
   },
   {
     id: "grabfood",
     name: "GrabFood",
     logo: "/grabfood.webp",
     url: "https://food.grab.com",
-    color: "bg-gradient-to-r from-green-600 to-green-500",
+    color: "from-navy-600 via-navy-700 to-navy-800",
     textColor: "text-white",
+    description: "Đa dạng lựa chọn",
   },
   {
     id: "baemin",
     name: "Baemin",
     logo: "/baemin.webp",
     url: "https://baemin.vn",
-    color: "bg-gradient-to-r from-teal-400 to-teal-500",
-    textColor: "text-white",
+    color: "from-gold-300 via-gold-400 to-gold-500",
+    textColor: "text-navy-800",
+    description: "Ưu đãi hấp dẫn",
   },
   {
     id: "gojek",
     name: "GoFood",
     logo: "/gojek.webp",
     url: "https://gojek.com",
-    color: "bg-gradient-to-r from-green-500 to-green-400",
+    color: "from-navy-700 via-navy-800 to-navy-900",
     textColor: "text-white",
+    description: "Tiện lợi và nhanh",
   },
-];
+]
 
-export default function OrderPlatformsDialog({
-  trigger,
-  productName,
-  productSize,
-}: OrderPlatformsDialogProps) {
-  const [open, setOpen] = React.useState(false);
-  const platforms = defaultPlatforms;
+export default function OrderPlatformsDialog({ trigger, productName, productSize }: OrderPlatformsDialogProps) {
+  const [open, setOpen] = React.useState(false)
+  const platforms = defaultPlatforms
 
   const handlePlatformSelect = (platform: OrderPlatform) => {
-    // In a real application, you would construct the URL with product details
-    // For example: `${platform.url}/product?name=${encodeURIComponent(productName)}`
-    
-    // Open the platform URL in a new tab
-    window.open(platform.url, "_blank");
-    
-    // Close the dialog
-    setOpen(false);
-  };
+    window.open(platform.url, "_blank")
+    setOpen(false)
+  }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         {trigger || (
-          <Button className="w-full bg-gradient-to-r from-navy-600 to-navy-700 hover:from-navy-700 hover:to-navy-800 text-white">
+          <Button className="w-full bg-gradient-to-r from-gold-500 to-gold-400 hover:from-gold-600 hover:to-gold-500 text-navy-900 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+            <ShoppingBag className="w-4 h-4 mr-2" />
             Đặt Hàng Ngay
           </Button>
         )}
       </DialogTrigger>
-      <DialogContent className="sm:max-w-lg bg-gradient-to-br from-cream-50 to-white shadow-2xl rounded-2xl p-0 overflow-hidden">
-        <DialogHeader className="pt-6 pb-2 px-4 sm:px-6">
-          <DialogTitle className="text-xl sm:text-2xl font-bold text-center text-navy-900 flex items-center justify-center gap-2">
-            <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-gold-500" />
-            Chọn Nền Tảng Đặt Hàng
-          </DialogTitle>
-          <DialogDescription className="text-center pt-2 font-semibold text-navy-700 bg-navy-50 border border-navy-100 rounded-lg px-3 py-1.5 mt-2 text-sm sm:text-base">
-            {productName}
-            {productSize && <span className="font-normal text-gray-600 ml-1">- Size {productSize}</span>}
-          </DialogDescription>
-        </DialogHeader>
+      <DialogContent className="sm:max-w-md md:max-w-2xl bg-white shadow-2xl rounded-xl p-0 overflow-hidden border-0 w-[calc(100%-2rem)] max-h-[90vh] mx-auto">
+        {/* Simplified header for mobile */}
+        <div className="bg-gradient-to-br from-navy-800 via-navy-700 to-navy-600 p-4 text-white relative overflow-hidden">
+          <div className="absolute inset-0 bg-black/10"></div>
+          <div className="absolute -top-4 -right-4 w-24 h-24 bg-white/10 rounded-full blur-xl"></div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 p-4 sm:p-6 pt-4">
-          {platforms.map((platform) => (
-            <div key={platform.id} className="relative group">
-              <div
-                className={`absolute -inset-1 rounded-2xl blur-md opacity-0 group-hover:opacity-75 transition-all duration-300 ${platform.color}`}
-              />
-              <Button
-                onClick={() => handlePlatformSelect(platform)}
-                className={`relative w-full h-28 sm:h-36 p-4 flex flex-col items-center justify-center gap-2 sm:gap-3 ${platform.color} ${platform.textColor} rounded-xl transition-all duration-300 shadow-lg hover:shadow-2xl transform hover:-translate-y-1`}
-              >
-                <div className="w-14 h-14 sm:w-16 sm:h-16 bg-white/95 group-hover:bg-white rounded-full flex items-center justify-center p-2 sm:p-2.5 shadow-inner backdrop-blur-sm transition-colors duration-300">
-                  <Image
-                    src={platform.logo}
-                    alt={platform.name}
-                    width={44}
-                    height={44}
-                    className="object-contain group-hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <span className="font-semibold tracking-wide text-sm sm:text-base">{platform.name}</span>
-                  <ExternalLink className="w-4 h-4" />
-                </div>
-              </Button>
+          <DialogHeader className="relative z-10">
+            <DialogTitle className="text-xl font-bold text-center flex items-center justify-center gap-2 mb-2">
+              <Sparkles className="w-5 h-5 text-gold-300" />
+              Chọn Nền Tảng
+            </DialogTitle>
+            
+            {/* Fix: Replace DialogDescription (which renders as p) with a regular div */}
+            <div className="text-center text-white/90 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-3 py-2 mt-2">
+              <p className="font-semibold">{productName}</p>
+              {productSize && <p className="text-xs text-white/80 mt-1">Size: {productSize}</p>}
             </div>
-          ))}
+          </DialogHeader>
         </div>
 
-        <div className="text-xs text-center text-navy-700/80 py-2 sm:py-3 bg-gradient-to-t from-cream-100 to-transparent">
-          Bạn sẽ được chuyển đến trang đặt hàng của đối tác
+        {/* Platforms List - Vertical layout optimized for mobile */}
+        <div className="p-4 bg-gradient-to-br from-cream-50 to-white overflow-y-auto max-h-[60vh]">
+          <div className="flex flex-col gap-3">
+            {platforms.map((platform, index) => (
+              <div key={platform.id} className="group relative" style={{ animationDelay: `${index * 100}ms` }}>
+                {/* Glow effect */}
+                <div
+                  className={`absolute -inset-1 bg-gradient-to-r ${platform.color} rounded-xl blur opacity-0 group-hover:opacity-30 transition-all duration-500`}
+                ></div>
+
+                {/* Main button - Horizontal layout for better mobile touch targets */}
+                <Button
+                  onClick={() => handlePlatformSelect(platform)}
+                  className={`relative w-full h-auto py-3 px-4 bg-white hover:bg-gray-50 border-2 border-gray-100 hover:border-gold-200 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg`}
+                >
+                  <div
+                    className={`absolute inset-0 bg-gradient-to-br ${platform.color} opacity-0 group-hover:opacity-5 transition-opacity duration-300 rounded-xl`}
+                  ></div>
+
+                  <div className="relative z-10 flex items-center gap-4 w-full">
+                    {/* Logo container */}
+                    <div
+                      className={`relative w-14 h-14 flex-shrink-0 bg-gradient-to-br ${platform.color} rounded-lg p-0.5 shadow-md`}
+                    >
+                      <div className="w-full h-full bg-white rounded-md flex items-center justify-center p-2">
+                        <Image
+                          src={platform.logo || "/placeholder.svg"}
+                          alt={platform.name}
+                          width={40}
+                          height={40}
+                          className="object-contain"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Platform info - Left aligned for easier reading */}
+                    <div className="text-left flex-1">
+                      <div className="flex items-center gap-1 mb-1">
+                        <span className="font-bold text-navy-800">
+                          {platform.name}
+                        </span>
+                        <ExternalLink className="w-3.5 h-3.5 text-navy-600" />
+                      </div>
+                      <div className="text-xs text-gray-500">
+                        {platform.description}
+                      </div>
+                    </div>
+                  </div>
+                </Button>
+              </div>
+            ))}
+          </div>
+
+          {/* Footer note - Simplified */}
+          <div className="text-center mt-4">
+            <div className="inline-flex items-center gap-2 text-xs text-navy-700 bg-navy-50 px-3 py-1.5 rounded-full border border-navy-100">
+              <div className="w-1.5 h-1.5 bg-gold-500 rounded-full animate-pulse"></div>
+              Chuyển đến trang đối tác
+            </div>
+          </div>
         </div>
       </DialogContent>
     </Dialog>
-  );
-} 
+  )
+}
